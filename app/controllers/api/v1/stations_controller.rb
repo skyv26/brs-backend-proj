@@ -1,8 +1,7 @@
 class Api::V1::StationsController < ApplicationController
   before_action :fetch_station, only: %i[update show destroy]
 
-  def index
-    @station = Station.all
+  def show
     render json: StationSerializer.new(@station).serialized_json, status: :ok
   end
 
@@ -39,11 +38,12 @@ class Api::V1::StationsController < ApplicationController
 
     if @station.save
       obj = JSON.parse(StationSerializer.new(@station).serialized_json)
-      obj[:message] = 'Route updated successfully'
+      obj[:message] = 'Station updated successfully'
       render json: obj, status: :ok
     else
       render json: {
-        message: 'Station is not updated', station: @station
+        message: 'Station is not updated',
+        station: @station
       }, status: :unprocessable_entity
     end
   end
@@ -51,7 +51,7 @@ class Api::V1::StationsController < ApplicationController
   private
 
   def fetch_station
-    Station.find(params[:id])
+    @station = Station.find(params[:id])
   end
 
   def station_params
