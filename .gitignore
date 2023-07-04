@@ -9,6 +9,7 @@
 
 /.ruby-version
 Gemfile
+Gemfile.lock
 
 # Ignore all logfiles and tempfiles.
 /log/*
