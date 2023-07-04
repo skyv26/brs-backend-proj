@@ -8,7 +8,7 @@
 /.bundle
 
 /.ruby-version
-/Gemfile
+Gemfile
 
 # Ignore all logfiles and tempfiles.
 /log/*
