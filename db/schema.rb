@@ -15,15 +15,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_134628) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "buses", force: :cascade do |t|
-    t.string "name"
-    t.string "equiry_number"
-    t.string "bus_number"
-    t.integer "capacity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reservations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "berth_number"
     t.string "refund_status"
@@ -44,6 +35,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_134628) do
   create_table "services", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "icon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stations", force: :cascade do |t|
+    t.string "name"
+    t.string "city"
+    t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
