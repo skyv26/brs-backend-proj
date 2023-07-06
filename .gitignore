@@ -10,7 +10,8 @@
 /.ruby-version
 Gemfile
 Gemfile.lock
-
+/config/database.yml
+/db/seeds.rb
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -33,4 +34,3 @@ Gemfile.lock
 /config/master.key
 
 # Ignore database.yml
-/config/database.yml
