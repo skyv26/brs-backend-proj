@@ -5,10 +5,8 @@ class Route < ApplicationRecord
   validate :departure_time_is_valid_datetime
 
   def departure_time_is_valid_datetime
-    begin
-      DateTime.parse(departure_time.to_s)
-    rescue ArgumentError
-      errors.add(:departure_time, "must be a valid datetime")
-    end
+    DateTime.parse(departure_time.to_s)
+  rescue ArgumentError
+    errors.add(:departure_time, 'must be a valid datetime')
   end
 end
