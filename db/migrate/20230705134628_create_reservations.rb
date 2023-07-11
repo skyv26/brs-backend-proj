@@ -10,3 +10,5 @@ class CreateReservations < ActiveRecord::Migration[7.0]
     end
   end
 end
+
+# Reservation.create!(berth_number: 2, refund_status: 'Not Applicable', amount_paid: 5.66, status: 'asds')
