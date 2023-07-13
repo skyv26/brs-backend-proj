@@ -8,7 +8,6 @@ RSpec.describe Service, type: :model do
       it 'has invalid name column value because name should be string.' do
         subject[:name] = 25.5
         subject[:icon] = true
-        p subject
         expect(subject).to be_valid
       end
     end
