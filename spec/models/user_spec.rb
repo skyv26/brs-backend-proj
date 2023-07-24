@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   before(:each) do
-    @first_user = User.new(full_name: "mike benson", email_address: "mike@benson", date_of_birth: "2000-01-01", mobile_no: "1234567890", password: "password", profile_photo: "profile.png", role: "admin", security_question: "What is your first pet's name?", security_answer: "cat")
+    @first_user = User.new(full_name: "mike benson", email_address: "mike@benson", date_of_birth: "2000-01-01",
+                           mobile_no: "1234567890", password: "password", profile_photo: "profile.png", role: "admin",
+                           security_question: "What is your first pet's name?", security_answer: "cat")
   end
 
   context "User model validations" do
@@ -26,7 +28,8 @@ RSpec.describe User, type: :model do
     end
 
     it "is not valid with a max of 128 characters for email address" do
-      @first_user.email_address = "mike.bensonbensonamatacodingbootcampbensonbensonbensonbensonbensonbensonbensonbensonbensonnbensonbensonbensnbensonbensonbensnbensonbensonbens@gmail.com"
+      @first_user.email_address = "mike.bensonbensonamatacodingbootcampbensonbensonbensonbensonbensonbensonbensonb
+      ensonbensonnbensonbensonbensnbensonbensonbensnbensonbensonbens@gmail.com"
       expect(@first_user).to_not be_valid
     end
 
