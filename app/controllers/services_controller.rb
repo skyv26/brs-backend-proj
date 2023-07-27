@@ -29,6 +29,13 @@ class ServicesController < ApplicationController
     end
 
     def update
+        @service = fetch_service
+        @service.update(service_params)
+        if @service.save
+            render json: {
+                message: "Service is updated successfully", service: @service
+            }
+        end
     end
 
     private
