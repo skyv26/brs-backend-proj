@@ -3,37 +3,52 @@ class StationsController < ApplicationController
   attr_reader :station_params, :fetch_station
   
   def index
-    Station.all
+   @station = Station.all
+    render json: StationSerializer.new(@station).serialized_json, status: :ok
+  
   end
 
   def show
-    render json: fetch_station
+    @station = Station.all
+    render json: StationSerializer.new(@station).serialized_json, status: :ok
   end
 
-  def new
-  end
 
   def create
     @station = Station.new(station_params)
     if @station.save
-      render json: @station
+      render json: {
+        message: "Station is created successfully", 
+      }, status: :created
+      else
+        render json: {
+          message: "Station is not created", 
+        }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @station = fetch_station
     if @station.delete
-      render json: @station
+      render json: { message: "Station is deleted successfully" }, status: :ok
+    else
+      render json: { message: "Station is not deleted" }, status: :unprocessable_entity
     end
   end
 
   def update
     @station = fetch_station
     @station.update(station_params)
+
+    
     if @station.save
+     obj = JSON.parse(StationSerializer.new(@station).serialized_json)
+     obj[:message] = "Route updated successfully"
+     render json: obj, status: :ok
+    else
       render json: {
-        message: "Station is updated successfully", station: @station
-      }
+        message: "Station is not updated", station: @station
+      }, status: :unprocessable_entity
     end
   end
 
