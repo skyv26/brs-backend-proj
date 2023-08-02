@@ -3,7 +3,8 @@ class ServicesController < ApplicationController
     before_action :fetch_service, only: [:update, :show, :destroy]
 
     def index
-        Service.all
+        service = Service.all
+        render json: ServiceSerializer.new(service).serialized_json
     end
     
     def show
