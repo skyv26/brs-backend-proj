@@ -3,11 +3,15 @@ class RoutesController < ApplicationController
 
   def index
     @routes = Route.all
-    render json: @routes, status: :ok
+    object = JSON.parse(RouteSerializer.new(@routes).serialized_json)
+    object[:status] = :ok
+    render json: object
   end
 
   def show
-    render json: @route, status: :ok
+    object = JSON.parse(RouteSerializer.new(@route).serialized_json)
+    object[:status] = :ok
+    render json: object
   end
 
   def create
@@ -26,10 +30,9 @@ class RoutesController < ApplicationController
 
   def update
     if @route.update(route_params)
-      render json: {
-        route: @route,
-        message: "Route updated successfully",
-      }, status: :ok
+      obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
+      obj[:message] = "Route updated successfully"
+      render json: obj, status: :ok
     else
       render json: {
                error_message: "Route updates field",
