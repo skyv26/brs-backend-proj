@@ -4,35 +4,54 @@ class BusesController < ApplicationController
 
     def index
         @bus=Bus.all
-        render json: BusSerializer.new(@bus).serialized_json , status: 200
+        obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
+        obj[:status] = :ok
+        render json: obj
     end
 
     def show
-        render json: BusSerializer.new(@bus).serialized_json, status: 200
+        obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
+        obj[:status] = :ok
+        render json: obj
     end
 
     def create
         @bus = Bus.new(bus_params)
         if @bus.save
-            render json: {message: "Record created successfully" , status: 201 }
+            obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
+            obj[:status] = :ok
+            obj[:message]="Record is created successfully !"
+            render json: obj
         else
-            render json: @bus.errors, status: 500 
+            obj[:status] = :bad_request
+            obj[:message] = "Something is not correct."
+            render json: obj
         end
     end
 
     def destroy
         if @bus.destroy
-            render json: { message: "Deleted successfully", status: :ok } 
+            obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
+            obj[:status] = :ok
+            obj[:message] = "Record is deleted successfully !"
+            render json: obj
+        else
+            obj[:status] = :forbidden
+            obj[:message] = "Please make sure that your ID is correct"
+            render json: obj
         end
     end
 
     def update
         if @bus.update(bus_params)
             obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
+            obj[:status] = :ok
             obj[:message] = "Record updated successfully"
-            render json: obj, status: :ok    
+            render json: obj
         else
-            render json: @bus.errors.full_message, status: :unprocessable_entity 
+            obj[:status] = :unprocessable_entity
+            obj[:message] = "Please make sure that your ID is correct"
+            render json: obj  
         end
     end
 
