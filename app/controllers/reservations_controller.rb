@@ -1,7 +1,7 @@
 require 'rack/utils'
 
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :update, :destroy]
+  before_action :set_reservation, only: %i[show update destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def index
@@ -22,16 +22,16 @@ class ReservationsController < ApplicationController
   end
 
   def destroy
-    if @reservation.destroy
-      render json: { message: "Reservation successfully deleted!" }, status: :ok
-    end
+    return unless @reservation.destroy
+
+    render json: { message: 'Reservation successfully deleted!' }, status: :ok
   end
 
   def create
     @reservation = Reservation.new(reservation_params)
 
     if @reservation.save
-      render json: { message: "Reservation successfully created!"}, status: :created
+      render json: { message: 'Reservation successfully created!' }, status: :created
     else
       render json: { errors: @reservation.errors }, status: :unprocessable_entity
     end
