@@ -16,6 +16,7 @@ class BusesController < ApplicationController
 
   def create
     @bus = Bus.new(bus_params)
+    obj = {}
     if @bus.save
       obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
       obj[:status] = :ok
@@ -28,6 +29,7 @@ class BusesController < ApplicationController
   end
 
   def destroy
+    obj = {}
     if @bus.destroy
       obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
       obj[:status] = :ok
@@ -40,6 +42,7 @@ class BusesController < ApplicationController
   end
 
   def update
+    obj = {}
     if @bus.update(bus_params)
       obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
       obj[:status] = :ok
