@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-<<<<<<< HEAD
   attr_reader :user_params, :fetch_user
 
   before_action :fetch_user, only: %i[update show destroy]
@@ -10,35 +9,6 @@ class UsersController < ApplicationController
     @users[:status] = :ok
     render json: @users
   end
-=======
-    attr_reader :user_params, :fetch_user
-    before_action :fetch_user, only: [:update, :show, :destroy]
-
-    def index
-        @users = User.all
-        @users = JSON.parse(UserSerializer.new(@users).serialized_json)
-        @users[:status] = :ok
-        render json: @users
-    end
-    
-    def show
-    end
-
-    def create
-        @user = User.new(user_params)
-        obj = {}
-        if @user.save
-            obj = JSON.parse(UserSerializer.new(@user).serialized_json)
-            obj[:status] = :created
-            obj[:message] = "New User is added successfully !"
-            render json: obj
-        else
-            obj[:status] = :bad_request
-            obj[:message] = "Oops! Something is not correct."
-            render json: obj
-        end
-    end
->>>>>>> b99f374 (Update the `User` endpoints with logic)
 
   def show
     obj = JSON.parse(UserSerializer.new(fetch_user).serialized_json)
