@@ -1,6 +1,5 @@
 class StationsController < ApplicationController
   before_action :fetch_station, only: %i[update show destroy]
-  attr_reader :station_params, :fetch_station
 
   def index
     @station = Station.all

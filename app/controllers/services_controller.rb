@@ -1,6 +1,4 @@
 class ServicesController < ApplicationController
-  attr_reader :service_params, :fetch_service
-
   before_action :fetch_service, only: %i[update show destroy]
 
   def index

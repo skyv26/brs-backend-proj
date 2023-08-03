@@ -1,6 +1,4 @@
 class BusesController < ApplicationController
-  attr_reader :bus_find, :bus_params
-
   before_action :bus_find, only: %i[show destroy update]
 
   def index

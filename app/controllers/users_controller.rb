@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  attr_reader :user_params, :fetch_user
-
   before_action :fetch_user, only: %i[update show destroy]
 
   def index
