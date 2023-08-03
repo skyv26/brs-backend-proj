@@ -23,12 +23,11 @@ class ServicesController < ApplicationController
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
       obj[:status] = :created
       obj[:message] = 'New service is added successfully !'
-      render json: obj
     else
       obj[:status] = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
-      render json: obj
     end
+    render json: obj
   end
 
   def destroy
@@ -38,12 +37,11 @@ class ServicesController < ApplicationController
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'Service is deleted successfully !'
-      render json: obj
     else
       obj[:status] = :forbidden
       obj[:message] = 'Please make sure that your ID is correct'
-      render json: obj
     end
+    render json: obj
   end
 
   def update
@@ -54,12 +52,11 @@ class ServicesController < ApplicationController
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'Service is updated successfully'
-      render json: obj
     else
       obj[:status] = :unprocessable_entity
       obj[:message] = 'Please make sure that your ID is correct'
-      render json: obj
     end
+    render json: obj
   end
 
   private

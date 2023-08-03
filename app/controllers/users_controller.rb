@@ -23,12 +23,11 @@ class UsersController < ApplicationController
       obj = JSON.parse(UserSerializer.new(@user).serialized_json)
       obj[:status] = :created
       obj[:message] = 'New User is added successfully !'
-      render json: obj
     else
       obj[:status] = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
-      render json: obj
     end
+    render json: obj
   end
 
   def destroy
@@ -38,12 +37,11 @@ class UsersController < ApplicationController
       obj = JSON.parse(UserSerializer.new(@user).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'User is deleted successfully !'
-      render json: obj
     else
       obj[:status] = :forbidden
       obj[:message] = 'Please make sure that your ID is correct'
-      render json: obj
     end
+    render json: obj
   end
 
   def update
@@ -54,12 +52,11 @@ class UsersController < ApplicationController
       obj = JSON.parse(UserSerializer.new(@user).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'User is updated successfully'
-      render json: obj
     else
       obj[:status] = :unprocessable_entity
       obj[:message] = 'Please make sure that your ID is correct'
-      render json: obj
     end
+    render json: obj
   end
 
   private

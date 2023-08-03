@@ -22,12 +22,11 @@ class BusesController < ApplicationController
       obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'Record is created successfully !'
-      render json: obj
     else
       obj[:status] = :bad_request
       obj[:message] = 'Something is not correct.'
-      render json: obj
     end
+    render json: obj
   end
 
   def destroy
@@ -35,12 +34,11 @@ class BusesController < ApplicationController
       obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'Record is deleted successfully !'
-      render json: obj
     else
       obj[:status] = :forbidden
       obj[:message] = 'Please make sure that your ID is correct'
-      render json: obj
     end
+    render json: obj
   end
 
   def update
@@ -48,12 +46,11 @@ class BusesController < ApplicationController
       obj = JSON.parse(BusSerializer.new(@bus).serialized_json)
       obj[:status] = :ok
       obj[:message] = 'Record updated successfully'
-      render json: obj
     else
       obj[:status] = :unprocessable_entity
       obj[:message] = 'Please make sure that your ID is correct'
-      render json: obj
     end
+    render json: obj
   end
 
   private
