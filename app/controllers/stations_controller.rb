@@ -1,11 +1,10 @@
 class StationsController < ApplicationController
-  before_action :fetch_station, only: [:update, :show, :destroy]
+  before_action :fetch_station, only: %i[update show destroy]
   attr_reader :station_params, :fetch_station
-  
+
   def index
-   @station = Station.all
+    @station = Station.all
     render json: StationSerializer.new(@station).serialized_json, status: :ok
-  
   end
 
   def show
@@ -13,26 +12,25 @@ class StationsController < ApplicationController
     render json: StationSerializer.new(@station).serialized_json, status: :ok
   end
 
-
   def create
     @station = Station.new(station_params)
     if @station.save
       render json: {
-        message: "Station is created successfully", 
+        message: 'Station is created successfully'
       }, status: :created
-      else
-        render json: {
-          message: "Station is not created", 
-        }, status: :unprocessable_entity
+    else
+      render json: {
+        message: 'Station is not created'
+      }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @station = fetch_station
     if @station.delete
-      render json: { message: "Station is deleted successfully" }, status: :ok
+      render json: { message: 'Station is deleted successfully' }, status: :ok
     else
-      render json: { message: "Station is not deleted" }, status: :unprocessable_entity
+      render json: { message: 'Station is not deleted' }, status: :unprocessable_entity
     end
   end
 
@@ -40,14 +38,13 @@ class StationsController < ApplicationController
     @station = fetch_station
     @station.update(station_params)
 
-    
     if @station.save
-     obj = JSON.parse(StationSerializer.new(@station).serialized_json)
-     obj[:message] = "Route updated successfully"
-     render json: obj, status: :ok
+      obj = JSON.parse(StationSerializer.new(@station).serialized_json)
+      obj[:message] = 'Route updated successfully'
+      render json: obj, status: :ok
     else
       render json: {
-        message: "Station is not updated", station: @station
+        message: 'Station is not updated', station: @station
       }, status: :unprocessable_entity
     end
   end
@@ -61,6 +58,4 @@ class StationsController < ApplicationController
   def station_params
     params.require(:station).permit('name', 'city', 'state')
   end
-
-
 end
