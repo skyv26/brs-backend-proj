@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Api::V1::UsersController < ApplicationController
   before_action :fetch_user, only: %i[update show destroy]
 
   def index
