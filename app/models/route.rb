@@ -11,4 +11,7 @@ class Route < ApplicationRecord
   rescue ArgumentError
     errors.add(:departure_time, 'must be a valid datetime')
   end
+
+  has_many :bus_routes
+  has_many :buses, through: :bus_routes
 end
