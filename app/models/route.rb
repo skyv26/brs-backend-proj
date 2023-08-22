@@ -1,6 +1,6 @@
 class Route < ApplicationRecord
-  belongs_to :station, foreign_key: 'start_station_id'
-  belongs_to :station, foreign_key: 'destination_station_id'
+  belongs_to :start_station, class_name: 'Station', foreign_key: 'start_station_id'
+  belongs_to :destination_station, class_name: 'Station', foreign_key: 'destination_station_id'
   validates :distance, presence: true, numericality: { only_integer: true }
   validates :time_duration, presence: true, numericality: { only_integer: true }
   validates :departure_time, presence: true
