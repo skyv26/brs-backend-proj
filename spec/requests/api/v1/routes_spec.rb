@@ -25,6 +25,8 @@ RSpec.describe 'api/v1/routes', type: :request do
           route: {
             type: :object,
             properties: {
+              start_station_id: { type: :uuid },
+              destination_station_id: { type: :uuid },
               distance: { type: :integer },
               time_duration: { type: :integer },
               departure_time: { type: :string },
@@ -77,6 +79,8 @@ RSpec.describe 'api/v1/routes', type: :request do
           route: {
             type: :object,
             properties: {
+              start_station_id: { type: :uuid },
+              destination_station_id: { type: :uuid },
               distance: { type: :integer },
               time_duration: { type: :integer },
               departure_time: { type: :string },
