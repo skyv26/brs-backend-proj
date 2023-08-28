@@ -5,7 +5,7 @@ class Api::V1::StationsController < ApplicationController
     render json: StationSerializer.new(@station).serialized_json, status: :ok
   end
 
-  def show
+  def index
     @station = Station.all
     render json: StationSerializer.new(@station).serialized_json, status: :ok
   end
@@ -55,6 +55,7 @@ class Api::V1::StationsController < ApplicationController
   end
 
   def station_params
-    params.require(:station).permit('name', 'city', 'state')
+    params.require(:station).permit('name','city', 'state')
   end
+  
 end
