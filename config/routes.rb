@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :routes
       resources :buses
+      resources :stations
     end
   end
 end
