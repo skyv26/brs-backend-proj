@@ -53,6 +53,15 @@ class Api::V1::ServicesController < ApplicationController
 
   def fetch_service
     Service.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'service',
+        attributes: {}
+      }
+    }
+    render json: obj, status: :not_found
   end
 
   def service_params
