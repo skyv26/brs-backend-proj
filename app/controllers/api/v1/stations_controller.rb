@@ -51,7 +51,18 @@ class Api::V1::StationsController < ApplicationController
   private
 
   def fetch_station
-    @station = Station.find(params[:id])
+    begin
+      Station.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      obj = { 
+        data: {
+          id: params[:id],
+          type: "station",
+          attributes: {}
+        }
+      }
+      render json: obj, status: :not_found
+    end
   end
 
   def station_params
