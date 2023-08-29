@@ -16,13 +16,13 @@ class Api::V1::StationsController < ApplicationController
     status = :created
     if @station.save
       obj = JSON.parse(StationSerializer.new(@station).serialized_json)
-      obj[:message] = 'New Station is added successfully !' 
+      obj[:message] = 'New Station is added successfully !'
     else
       obj[:invalid_requests] = @station.errors.full_messages
       status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
     end
-    render json: obj, status: status
+    render json: obj, status:
   end
 
   def destroy
@@ -46,28 +46,25 @@ class Api::V1::StationsController < ApplicationController
       obj[:invalid_requests] = @station.errors.full_messages
       status = :unprocessable_entity
     end
-    render json: obj, status: status
+    render json: obj, status:
   end
 
   private
 
   def fetch_station
-    begin
-      Station.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      obj = { 
-        data: {
-          id: params[:id],
-          type: "station",
-          attributes: {}
-        }
+    Station.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'station',
+        attributes: {}
       }
-      render json: obj, status: :not_found
-    end
+    }
+    render json: obj, status: :not_found
   end
 
   def station_params
-    params.require(:station).permit('name','city', 'state')
+    params.require(:station).permit('name', 'city', 'state')
   end
-  
 end

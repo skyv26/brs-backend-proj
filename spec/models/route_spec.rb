@@ -3,8 +3,11 @@ require 'rails_helper'
 RSpec.describe Route, type: :model do
   let(:station_1) { Station.create(name: 'Station1', city: 'FTN', state: 'TN01AB1234') }
   let(:station_2) { Station.create(name: 'Station2', city: 'FTN', state: 'TN01AB1234') }
-  
-  let(:route) { described_class.new( start_station: station_1 , destination_station: station_2, distance: 100, time_duration: 120, departure_time: '2023-07-25 10:00:00') }
+
+  let(:route) do
+    described_class.new(start_station: station_1, destination_station: station_2, distance: 100, time_duration: 120,
+                        departure_time: '2023-07-25 10:00:00')
+  end
 
   context 'table test cases checking for either bad argument or invalid information.' do
     describe Route do
@@ -59,10 +62,9 @@ RSpec.describe Route, type: :model do
       end
 
       it 'departure_time should not be a number' do
-        route[:departure_time] = 12345
+        route[:departure_time] = 12_345
         expect(route).to_not be_valid
       end
-
     end
   end
 

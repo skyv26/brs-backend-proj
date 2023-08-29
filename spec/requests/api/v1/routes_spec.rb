@@ -29,11 +29,11 @@ RSpec.describe 'api/v1/routes', type: :request do
               destination_station_id: { type: :uuid },
               distance: { type: :integer },
               time_duration: { type: :integer },
-              departure_time: { type: :string },
+              departure_time: { type: :string }
             },
-            required: %w[distance time_duration departure_time],
-          },
-        },
+            required: %w[distance time_duration departure_time]
+          }
+        }
       }
 
       response(200, 'successful') do
@@ -60,7 +60,6 @@ RSpec.describe 'api/v1/routes', type: :request do
         run_test!
       end
     end
-    
   end
 
   path '/api/v1/routes/{id}' do
@@ -96,10 +95,10 @@ RSpec.describe 'api/v1/routes', type: :request do
               destination_station_id: { type: :string, format: :uuid },
               distance: { type: :integer },
               time_duration: { type: :integer },
-              departure_time: { type: :string },
-            },
-          },
-        },
+              departure_time: { type: :string }
+            }
+          }
+        }
       }
 
       response(200, 'successful') do

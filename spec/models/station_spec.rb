@@ -108,7 +108,6 @@ RSpec.describe Station, type: :model do
         subject.state = false
         expect(subject).to_not be_valid
       end
-
     end
   end
 

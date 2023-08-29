@@ -22,7 +22,7 @@ class Api::V1::RoutesController < ApplicationController
       status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
     end
-      render json: obj, status: status
+    render json: obj, status:
   end
 
   def update
@@ -37,37 +37,36 @@ class Api::V1::RoutesController < ApplicationController
       obj[:invalid_requests] = @route.errors.full_messages
       status = :unprocessable_entity
     end
-    render json: obj, status: status
+    render json: obj, status:
   end
 
   def destroy
     @route = set_route
-    if @route.destroy
-      obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
-      obj[:message] = 'Route deleted successfully'
-      render json: obj, status: :ok
-    end
+    return unless @route.destroy
+
+    obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
+    obj[:message] = 'Route deleted successfully'
+    render json: obj, status: :ok
   end
 
   private
 
   def route_params
-    params.require(:route).permit(:distance, :time_duration, :departure_time, :start_station_id, :destination_station_id)
+    params.require(:route).permit(:distance, :time_duration, :departure_time, :start_station_id,
+                                  :destination_station_id)
   end
 
   def set_route
-    begin
-      Route.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      obj = { 
-        data: {
-          id: params[:id],
-          type: "route",
-          attributes: {}
-        },
-        status: :not_found,
-      }
-      render json: obj
-    end
+    Route.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'route',
+        attributes: {}
+      },
+      status: :not_found
+    }
+    render json: obj
   end
 end

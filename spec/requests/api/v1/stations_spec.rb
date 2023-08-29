@@ -1,13 +1,10 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/stations', type: :request do
-
   path '/api/v1/stations' do
-
     get('list stations') do
       tags 'Stations'
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -30,15 +27,14 @@ RSpec.describe 'api/v1/stations', type: :request do
             properties: {
               name: { type: :string },
               city: { type: :string },
-              state: { type: :string },
+              state: { type: :string }
             },
-            required: %w[name city state],
-          },
-        },
+            required: %w[name city state]
+          }
+        }
       }
 
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -82,10 +78,10 @@ RSpec.describe 'api/v1/stations', type: :request do
             properties: {
               name: { type: :string },
               city: { type: :string },
-              state: { type: :string },
-            },
-          },
-        },
+              state: { type: :string }
+            }
+          }
+        }
       }
       response(200, 'successful') do
         let(:id) { '123' }
