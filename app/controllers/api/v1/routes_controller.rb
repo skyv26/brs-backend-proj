@@ -9,7 +9,7 @@ class Api::V1::RoutesController < ApplicationController
   end
 
   def show
-    object = JSON.parse(RouteSerializer.new(@route).serialized_json)
+    object = JSON.parse(RouteSerializer.new(set_route).serialized_json)
     object[:status] = :ok
     render json: object
   end
