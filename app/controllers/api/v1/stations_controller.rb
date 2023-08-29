@@ -12,15 +12,17 @@ class Api::V1::StationsController < ApplicationController
 
   def create
     @station = Station.new(station_params)
+    obj = {}
+    status = :created
     if @station.save
-      render json: {
-        message: 'Station is created successfully'
-      }, status: :created
+      obj = JSON.parse(StationSerializer.new(@station).serialized_json)
+      obj[:message] = 'New Station is added successfully !' 
     else
-      render json: {
-        message: 'Station is not created'
-      }, status: :unprocessable_entity
+      obj[:invalid_requests] = @station.errors.full_messages
+      status = :bad_request
+      obj[:message] = 'Oops! Something is not correct.'
     end
+    render json: obj, status: status
   end
 
   def destroy
