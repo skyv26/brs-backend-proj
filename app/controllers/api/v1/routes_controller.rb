@@ -4,37 +4,29 @@ class Api::V1::RoutesController < ApplicationController
   def index
     @routes = Route.all
     object = JSON.parse(RouteSerializer.new(@routes).serialized_json)
-    object[:status] = :ok
-    render json: object
+    status = :ok
+    render json: object, status: status
   end
 
   def show
     object = JSON.parse(RouteSerializer.new(set_route).serialized_json)
-    object[:status] = :ok
-    render json: object
+    status = :ok
+    render json: object, status: status
   end
 
   def create
     @route = Route.new(route_params)
-    obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
+    status = :created
+    obj = {}
     if @route.save
-      obj['data']['id'] = @route.id
-      obj[:status] = :created
+      obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
       obj[:message] = 'New route is added successfully !'
-      # render json: {
-      #   message: 'Route created successfully'
-      # }, status: :created
     else
       obj[:invalid_requests] = @route.errors.full_messages
-      obj[:status] = :bad_request
+      status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
-      obj = obj.except('data')
     end
-      render json: obj
-      # render json: {
-      #   error_message: 'Route creations field',
-      #   errors: @route.errors.full_message
-      # }, status: :unprocessable_entity
+      render json: obj, status: status
   end
 
   def update
@@ -43,20 +35,22 @@ class Api::V1::RoutesController < ApplicationController
     status = :ok
     if @route.update(route_params)
       obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
-      obj[:messages] = ['Route updated successfully']
+      obj[:message] = 'Route updated successfully'
       @route.save
     else
-      obj[:messages] = @route.errors.full_messages
+      obj[:invalid_requests] = @route.errors.full_messages
       status = :unprocessable_entity
     end
     render json: obj, status: status
   end
 
   def destroy
-    @route.destroy
-    render json: {
-      message: 'Route deleted successfully'
-    }, status: :ok
+    @route = set_route
+    if @route.destroy
+      obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
+      obj[:message] = 'Route deleted successfully'
+      render json: obj, status: :ok
+    end
   end
 
   private
