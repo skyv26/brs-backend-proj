@@ -1,15 +1,16 @@
 class Service < ApplicationRecord
   validate :validate_name_type
   validate :validate_icon_type
+
   private
 
   def validate_name_type
     if name_before_type_cast.is_a?(Integer) ||
-      name_before_type_cast.is_a?(TrueClass) ||
-      name_before_type_cast.is_a?(FalseClass) ||
-      name_before_type_cast.is_a?(NilClass)
-     errors.add(:name, 'must be a string')
-   end
+       name_before_type_cast.is_a?(TrueClass) ||
+       name_before_type_cast.is_a?(FalseClass) ||
+       name_before_type_cast.is_a?(NilClass)
+      errors.add(:name, 'must be a string')
+    end
   end
 
   def validate_name_presence
@@ -18,11 +19,11 @@ class Service < ApplicationRecord
 
   def validate_icon_type
     if icon_before_type_cast.is_a?(Integer) ||
-      icon_before_type_cast.is_a?(TrueClass) ||
-      icon_before_type_cast.is_a?(FalseClass) ||
-      icon_before_type_cast.is_a?(NilClass)
-     errors.add(:icon, 'must be a string')
-   end
+       icon_before_type_cast.is_a?(TrueClass) ||
+       icon_before_type_cast.is_a?(FalseClass) ||
+       icon_before_type_cast.is_a?(NilClass)
+      errors.add(:icon, 'must be a string')
+    end
   end
 
   def validate_icon_presence
