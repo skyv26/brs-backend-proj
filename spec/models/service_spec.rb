@@ -1,14 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Service, type: :model do
-  subject { Service.new(name: 'asd', icon: true) }
-
-  context 'table test cases checking for either bad argument or invalid information.' do
+  subject { described_class.new(name: 'Air Conditioner', icon: 'path_to_the_icon') }
+  context 'test cases for either
+          bad or invalid arguments.' do
     describe Service do
-      it 'has invalid name column value because name should be string.' do
-        subject[:name] = 25.5
-        subject[:icon] = true
-        expect(subject).to be_valid
+      it 'name should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', true, false].each do |value|
+          subject.name = value
+          expect(route).to_not be_valid
+        end
+      end
+
+      it 'icon should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', true, false].each do |value|
+          subject.city = value
+          expect(route).to_not be_valid
+        end
       end
     end
   end
