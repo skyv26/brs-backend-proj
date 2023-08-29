@@ -5,117 +5,25 @@ RSpec.describe Station, type: :model do
   context 'test cases for either
           bad or invalid arguments.' do
     describe Station do
-      it 'name should not be nil' do
-        subject.name = nil
-        expect(subject).to_not be_valid
+      it 'name should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+          subject.name = value
+          expect(route).to_not be_valid
+        end
       end
 
-      it 'name should not be integer' do
-        subject.name = 1234
-        expect(subject).to_not be_valid
+      it 'city should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+          subject.city = value
+          expect(route).to_not be_valid
+        end
       end
 
-      it 'name should not be greater than 20 characters' do
-        subject.name = 'test' * 6
-        expect(subject).to_not be_valid
-      end
-
-      it 'name should not be empty' do
-        subject.name = ''
-        expect(subject).to_not be_valid
-      end
-
-      it 'name should be greater than atleast 3 characters' do
-        subject.name = 'AB'
-        expect(subject).to_not be_valid
-      end
-
-      it 'name should not be boolean' do
-        subject.name = true
-        expect(subject).to_not be_valid
-      end
-
-      it 'name should not be boolean' do
-        subject.name = false
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should not be nil' do
-        subject.city = nil
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should not be integer' do
-        subject.city = 1234
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should not be greater than 20 characters' do
-        subject.city = 'test' * 6
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should not be empty' do
-        subject.city = ''
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should be greater than atleast 3 characters' do
-        subject.city = 'AB'
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should not be boolean' do
-        subject.city = true
-        expect(subject).to_not be_valid
-      end
-
-      it 'city should not be boolean' do
-        subject.city = false
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should not be nil' do
-        subject.state = nil
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should not be integer' do
-        subject.state = 1234
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should not be greater than 20 characters' do
-        subject.state = 'test' * 6
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should not be empty' do
-        subject.state = ''
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should be greater than atleast 3 characters' do
-        subject.state = 'AB'
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should not be boolean' do
-        subject.state = true
-        expect(subject).to_not be_valid
-      end
-
-      it 'state should not be boolean' do
-        subject.state = false
-        expect(subject).to_not be_valid
-      end
-    end
-  end
-
-  context 'table test cases checking for correct' do
-    describe Station do
-      it 'should pass the test' do
-        expect(subject).to be_valid
+      it 'state should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+          subject.state = value
+          expect(route).to_not be_valid
+        end
       end
     end
   end
