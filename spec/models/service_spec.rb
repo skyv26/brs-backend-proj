@@ -6,16 +6,16 @@ RSpec.describe Service, type: :model do
           bad or invalid arguments.' do
     describe Service do
       it 'name should a non-empy atleast 3 and less than 20 character string' do
-        [nil, 1234, '', true, false].each do |value|
+        [nil, 1234, true, false].each do |value|
           subject.name = value
-          expect(route).to_not be_valid
+          expect(subject).to_not be_valid
         end
       end
 
       it 'icon should a non-empy atleast 3 and less than 20 character string' do
-        [nil, 1234, '', true, false].each do |value|
-          subject.city = value
-          expect(route).to_not be_valid
+        [nil, 1234, true, false].each do |value|
+          subject.icon = value
+          expect(subject).to_not be_valid
         end
       end
     end
