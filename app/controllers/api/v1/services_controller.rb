@@ -13,15 +13,16 @@ class Api::V1::ServicesController < ApplicationController
   def create
     @service = Service.new(service_params)
     obj = {}
+    status = :created
     if @service.save
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
-      obj[:status] = :created
       obj[:message] = 'New service is added successfully !'
     else
-      obj[:status] = :bad_request
+      obj[:invalid_requests] = @service.errors.full_messages
+      status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
     end
-    render json: obj
+    render json: obj, status: status
   end
 
   def destroy
