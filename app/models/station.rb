@@ -2,13 +2,13 @@ class Station < ApplicationRecord
   include StringValidator
   has_many :routes, foreign_key: 'start_station_id'
   has_many :routes, foreign_key: 'destination_station_id'
-  validate :name_should_be_string
-  validate :city_should_be_string
-  validate :state_should_be_string
+  validate :name_validity
+  validate :city_validity
+  validate :state_validity
 
   private
 
-  def name_should_be_string
+  def name_validity
     errors.add(:name, 'is a required property') unless name.present?
 
     if name_before_type_cast.is_a?(Integer) || name_before_type_cast.is_a?(TrueClass) || name_before_type_cast.is_a?(FalseClass) || name_before_type_cast.is_a?(NilClass)
@@ -20,7 +20,7 @@ class Station < ApplicationRecord
     end
   end
 
-  def city_should_be_string
+  def city_validity
     errors.add(:city, 'is a required property') unless city.present?
 
     if city_before_type_cast.is_a?(Integer) || city_before_type_cast.is_a?(TrueClass) || city_before_type_cast.is_a?(FalseClass) || city_before_type_cast.is_a?(NilClass)
@@ -32,7 +32,7 @@ class Station < ApplicationRecord
     end
   end
 
-  def state_should_be_string
+  def state_validity
     errors.add(:state, 'is a required property') unless state.present?
 
     if state_before_type_cast.is_a?(Integer) || state_before_type_cast.is_a?(TrueClass) || state_before_type_cast.is_a?(FalseClass) || state_before_type_cast.is_a?(NilClass)
