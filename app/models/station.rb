@@ -15,6 +15,8 @@ class Station < ApplicationRecord
       errors.add(:name, "must be a string")
     elsif name.size > 20
       errors.add(:name, "should not be greater than 20 characters")
+    elsif name.size <= 2
+      errors.add(:name, "should be valid and greater than 2 characters")
     end
   end
 
@@ -27,6 +29,8 @@ class Station < ApplicationRecord
       errors.add(:city, "must be a string")
     elsif city.size > 20
       errors.add(:city, "should not be greater than 20 characters")
+    elsif city.size <= 2
+      errors.add(:city, "should be valid and greater than 2 characters")
     end
   end
 
@@ -39,6 +43,8 @@ class Station < ApplicationRecord
       errors.add(:state, "must be a string")
     elsif state.length > 20
       errors.add(:state, "should not be greater than 20 characters")
+    elsif state.length <=2
+      errors.add(:state, "should be valid and greater than 2 characters")
     end
   end
 end
