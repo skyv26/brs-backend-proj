@@ -10,13 +10,13 @@ class Route < ApplicationRecord
   has_many :buses, through: :bus_routes
 
   private
-  
+
   def validate_distance_type
     if distance_before_type_cast.is_a?(String) ||
        distance_before_type_cast.is_a?(TrueClass) ||
        distance_before_type_cast.is_a?(FalseClass) ||
        distance_before_type_cast.is_a?(NilClass)
-       errors.add(:distance, 'must be an integer')
+      errors.add(:distance, 'must be an integer')
     end
   end
 

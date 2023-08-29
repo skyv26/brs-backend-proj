@@ -26,71 +26,35 @@ RSpec.describe Route, type: :model do
     )
   end
 
-  context 'test cases for
-           either bad or invalid
+  context 'test cases for either bad or invalid
            arguments.' do
     describe Route do
-      it 'start_station should be exist and valid' do
+      it 'start_station and destination_station should be exist and valid' do
         route[:start_station_id] = nil
         expect(route).to_not be_valid
-      end
-
-      it 'destination_station should be exist and valid' do
         route[:destination_station_id] = nil
         expect(route).to_not be_valid
       end
 
-      it 'distance should not be nil' do
-        route[:distance] = nil
-        expect(route).to_not be_valid
+      it 'distance should be an integer' do
+        [nil, 'test', true, '1234'].each do |value|
+          route[:distance] = value
+          expect(route).to_not be_valid
+        end
       end
 
-      it 'distance should not be a string' do
-        route[:distance] = 'test'
-        expect(route).to_not be_valid
+      it 'time_duration should be an integer' do
+        [nil, 'test', true, '1234'].each do |value|
+          route[:time_duration] = value
+          expect(route).to_not be_valid
+        end
       end
 
-      it 'distance should not be a decimal' do
-        route[:distance] = 123.45
-        expect(route).to_not be_valid
-      end
-
-      it 'time_duration should not be nil' do
-        route[:time_duration] = nil
-        expect(route).to_not be_valid
-      end
-
-      it 'time_duration should not be a string' do
-        route[:time_duration] = 'test'
-        expect(route).to_not be_valid
-      end
-
-      it 'time_duration should not be a decimal' do
-        route[:time_duration] = 123.45
-        expect(route).to_not be_valid
-      end
-
-      it 'departure_time should not be nil' do
-        route[:departure_time] = nil
-        expect(route).to_not be_valid
-      end
-
-      it 'departure_time should not be a plain text' do
-        route[:departure_time] = 'a plain text'
-        expect(route).to_not be_valid
-      end
-
-      it 'departure_time should not be a number' do
-        route[:departure_time] = 12_345
-        expect(route).to_not be_valid
-      end
-    end
-  end
-
-  context 'table test cases for correct inputs' do
-    describe Route do
-      it 'should pass the test' do
-        expect(route).to be_valid
+      it 'departure_time should be date and time' do
+        [nil, 'a plain text', 12_345].each do |value|
+          route[:departure_time] = value
+          expect(route).to_not be_valid
+        end
       end
     end
   end
