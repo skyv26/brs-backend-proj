@@ -95,6 +95,45 @@ paths:
       responses:
         '200':
           description: successful
+  "/api/v1/services":
+    get:
+      summary: list services
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create service
+      responses:
+        '200':
+          description: successful
+  "/api/v1/services/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show service
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update service
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update service
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete service
+      responses:
+        '200':
+          description: successful
   "/api/v1/stations":
     get:
       summary: list stations
