@@ -7,9 +7,7 @@ class Api::V1::ServicesController < ApplicationController
   end
 
   def show
-    obj = JSON.parse(ServiceSerializer.new(fetch_service).serialized_json)
-    obj[:status] = :ok
-    render json: obj
+    render json: ServiceSerializer.new(fetch_service).serialized_json, status: :ok
   end
 
   def create
