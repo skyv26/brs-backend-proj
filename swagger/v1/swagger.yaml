@@ -57,15 +57,11 @@ paths:
         type: string
     get:
       summary: Show Route
-      tags:
-      - Routes
       responses:
         '200':
           description: successful
     put:
       summary: Update Route by ID
-      tags:
-      - Routes
       parameters: []
       responses:
         '200':
@@ -96,8 +92,6 @@ paths:
                   required: []
     delete:
       summary: Delete Route
-      tags:
-      - Routes
       responses:
         '200':
           description: successful
@@ -174,6 +168,7 @@ paths:
                       type: string
                     state:
                       type: string
+                  required: []
     delete:
       summary: delete station
       tags:
