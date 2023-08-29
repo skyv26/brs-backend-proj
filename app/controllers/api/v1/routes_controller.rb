@@ -3,15 +3,11 @@ class Api::V1::RoutesController < ApplicationController
 
   def index
     @routes = Route.all
-    object = JSON.parse(RouteSerializer.new(@routes).serialized_json)
-    status = :ok
-    render json: object, status: status
+    render json: JSON.parse(RouteSerializer.new(@routes).serialized_json), status: :ok
   end
 
   def show
-    object = JSON.parse(RouteSerializer.new(set_route).serialized_json)
-    status = :ok
-    render json: object, status: status
+    render json: JSON.parse(RouteSerializer.new(set_route).serialized_json), status: :pk
   end
 
   def create
