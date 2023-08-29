@@ -71,7 +71,6 @@ RSpec.describe 'api/v1/routes', type: :request do
 
     put('Update Route by ID') do
       tags 'Routes'
-      parameter name: 'id', in: :path, type: :string, description: "Update a record by Id"
       consumes 'application/json'
       parameter name: :route, in: :body, schema: {
         type: :object,
@@ -79,8 +78,8 @@ RSpec.describe 'api/v1/routes', type: :request do
           route: {
             type: :object,
             properties: {
-              start_station_id: { type: :uuid },
-              destination_station_id: { type: :uuid },
+              start_station_id: { type: :string, format: :uuid },
+              destination_station_id: { type: :string, format: :uuid },
               distance: { type: :integer },
               time_duration: { type: :integer },
               departure_time: { type: :string },
