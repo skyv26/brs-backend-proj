@@ -7,7 +7,7 @@ class Api::V1::RoutesController < ApplicationController
   end
 
   def show
-    render json: RouteSerializer.new(set_route).serialized_json, status: :pk
+    render json: RouteSerializer.new(set_route).serialized_json, status: :ok
   end
 
   def create
