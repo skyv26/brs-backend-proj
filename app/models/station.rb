@@ -6,6 +6,8 @@ class Station < ApplicationRecord
   validate :city_should_be_string
   validate :state_should_be_string
 
+  private
+  
   def name_should_be_string
     unless name.present?
       errors.add(:name, "is a required property")
