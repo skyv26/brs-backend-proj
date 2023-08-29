@@ -11,7 +11,10 @@ class Station < ApplicationRecord
   def name_validity
     errors.add(:name, 'is a required property') unless name.present?
 
-    if name_before_type_cast.is_a?(Integer) || name_before_type_cast.is_a?(TrueClass) || name_before_type_cast.is_a?(FalseClass) || name_before_type_cast.is_a?(NilClass)
+    if name_before_type_cast.is_a?(Integer) || 
+       name_before_type_cast.is_a?(TrueClass) || 
+       name_before_type_cast.is_a?(FalseClass) || 
+       name_before_type_cast.is_a?(NilClass)
       errors.add(:name, 'must be a string')
     elsif name.size > 20
       errors.add(:name, 'should not be greater than 20 characters')
@@ -23,7 +26,10 @@ class Station < ApplicationRecord
   def city_validity
     errors.add(:city, 'is a required property') unless city.present?
 
-    if city_before_type_cast.is_a?(Integer) || city_before_type_cast.is_a?(TrueClass) || city_before_type_cast.is_a?(FalseClass) || city_before_type_cast.is_a?(NilClass)
+    if city_before_type_cast.is_a?(Integer) ||
+       city_before_type_cast.is_a?(TrueClass) ||
+       city_before_type_cast.is_a?(FalseClass) ||
+       city_before_type_cast.is_a?(NilClass)
       errors.add(:city, 'must be a string')
     elsif city.size > 20
       errors.add(:city, 'should not be greater than 20 characters')
@@ -35,7 +41,10 @@ class Station < ApplicationRecord
   def state_validity
     errors.add(:state, 'is a required property') unless state.present?
 
-    if state_before_type_cast.is_a?(Integer) || state_before_type_cast.is_a?(TrueClass) || state_before_type_cast.is_a?(FalseClass) || state_before_type_cast.is_a?(NilClass)
+    if state_before_type_cast.is_a?(Integer) ||
+       state_before_type_cast.is_a?(TrueClass) ||
+       state_before_type_cast.is_a?(FalseClass) ||
+       state_before_type_cast.is_a?(NilClass)
       errors.add(:state, 'must be a string')
     elsif state.length > 20
       errors.add(:state, 'should not be greater than 20 characters')
