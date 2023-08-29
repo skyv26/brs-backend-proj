@@ -20,6 +20,8 @@ paths:
       responses:
         '200':
           description: successful
+        '400':
+          description: Bad Request
       requestBody:
         content:
           application/json:
@@ -62,16 +64,12 @@ paths:
       summary: Update Route by ID
       tags:
       - Routes
-      parameters:
-      - name: id
-        in: path
-        description: Update a record by Id
-        required: true
-        schema:
-          type: string
+      parameters: []
       responses:
         '200':
           description: successful
+        '400':
+          description: Bad Request
       requestBody:
         content:
           application/json:
@@ -82,9 +80,11 @@ paths:
                   type: object
                   properties:
                     start_station_id:
-                      type: uuid
+                      type: string
+                      format: uuid
                     destination_station_id:
-                      type: uuid
+                      type: string
+                      format: uuid
                     distance:
                       type: integer
                     time_duration:
