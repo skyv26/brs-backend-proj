@@ -27,16 +27,11 @@ class Api::V1::ServicesController < ApplicationController
 
   def destroy
     @service = fetch_service
-    obj = {}
     if @service.delete
-      obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
-      obj[:status] = :ok
-      obj[:message] = 'Service is deleted successfully !'
+      render json: { message: 'Service is deleted successfully' }, status: :ok
     else
-      obj[:status] = :forbidden
-      obj[:message] = 'Please make sure that your ID is correct'
+      render json: { message: 'Service is not deleted' }, status: :unprocessable_entity
     end
-    render json: obj
   end
 
   def update
