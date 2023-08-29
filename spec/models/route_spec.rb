@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Route, type: :model do
-  let(:station_1) { Station.create(name: 'Station1', city: 'FTN', state: 'TN01AB1234') }
-  let(:station_2) { Station.create(name: 'Station2', city: 'FTN', state: 'TN01AB1234') }
+  let(:station1) { Station.create(name: 'Station1', city: 'FTN', state: 'TN01AB1234') }
+  let(:station2) { Station.create(name: 'Station2', city: 'FTN', state: 'TN01AB1234') }
 
   let(:route) do
-    described_class.new(start_station: station_1, destination_station: station_2, distance: 100, time_duration: 120,
+    described_class.new(start_station: station1, destination_station: station2, distance: 100, time_duration: 120,
                         departure_time: '2023-07-25 10:00:00')
   end
 
