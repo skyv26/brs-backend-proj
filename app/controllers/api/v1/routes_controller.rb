@@ -38,14 +38,18 @@ class Api::V1::RoutesController < ApplicationController
   end
 
   def update
-    obj = JSON.parse(RouteSerializer.new(set_route).serialized_json)
-    set_route.update(route_params)
-    if set_route.save
-      obj[:message] = 'Route updated successfully'
-      render json: obj, status: :ok
+    @route = set_route
+    obj = {}
+    status = :ok
+    if @route.update(route_params)
+      obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
+      obj[:messages] = ['Route updated successfully']
+      @route.save
     else
-      render json: obj, status: :unprocessable_entity
+      obj[:messages] = @route.errors.full_messages
+      status = :unprocessable_entity
     end
+    render json: obj, status: status
   end
 
   def destroy
