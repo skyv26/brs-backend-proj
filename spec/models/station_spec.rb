@@ -19,6 +19,16 @@ RSpec.describe Station, type: :model do
         expect(subject).to_not be_valid
       end
 
+      it 'name should not be empty' do
+        subject.name = ''
+        expect(subject).to_not be_valid
+      end
+
+      it 'name should be greater than atleast 3 characters' do
+        subject.name = 'AB'
+        expect(subject).to_not be_valid
+      end
+
       it 'name should not be boolean' do
         subject.name = true
         expect(subject).to_not be_valid
@@ -44,6 +54,16 @@ RSpec.describe Station, type: :model do
         expect(subject).to_not be_valid
       end
 
+      it 'city should not be empty' do
+        subject.city = ''
+        expect(subject).to_not be_valid
+      end
+
+      it 'city should be greater than atleast 3 characters' do
+        subject.city = 'AB'
+        expect(subject).to_not be_valid
+      end
+
       it 'city should not be boolean' do
         subject.city = true
         expect(subject).to_not be_valid
@@ -66,6 +86,16 @@ RSpec.describe Station, type: :model do
 
       it 'state should not be greater than 20 characters' do
         subject.state = 'test' * 6
+        expect(subject).to_not be_valid
+      end
+
+      it 'state should not be empty' do
+        subject.state = ''
+        expect(subject).to_not be_valid
+      end
+
+      it 'state should be greater than atleast 3 characters' do
+        subject.state = 'AB'
         expect(subject).to_not be_valid
       end
 
