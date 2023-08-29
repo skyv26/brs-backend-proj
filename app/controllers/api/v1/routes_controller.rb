@@ -64,6 +64,18 @@ class Api::V1::RoutesController < ApplicationController
   end
 
   def set_route
-    @route = Route.find(params[:id])
+    begin
+      Route.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      obj = { 
+        data: {
+          id: params[:id],
+          type: "route",
+          attributes: {}
+        },
+        status: :not_found,
+      }
+      render json: obj
+    end
   end
 end
