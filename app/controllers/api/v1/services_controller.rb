@@ -3,9 +3,7 @@ class Api::V1::ServicesController < ApplicationController
 
   def index
     service = Service.all
-    obj = JSON.parse(ServiceSerializer.new(service).serialized_json)
-    obj[:status] = :ok
-    render json: obj
+    render json: ServiceSerializer.new(service).serialized_json, status: :ok
   end
 
   def show
