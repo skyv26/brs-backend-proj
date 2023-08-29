@@ -34,18 +34,17 @@ class Api::V1::StationsController < ApplicationController
 
   def update
     @station = fetch_station
-    @station.update(station_params)
-
-    if @station.save
+    obj = {}
+    status = :ok
+    if @station.update(station_params)
       obj = JSON.parse(StationSerializer.new(@station).serialized_json)
       obj[:message] = 'Station updated successfully'
-      render json: obj, status: :ok
+      @station.save
     else
-      render json: {
-        message: 'Station is not updated',
-        station: @station
-      }, status: :unprocessable_entity
+      obj[:invalid_requests] = @station.errors.full_messages
+      status = :unprocessable_entity
     end
+    render json: obj, status: status
   end
 
   private
