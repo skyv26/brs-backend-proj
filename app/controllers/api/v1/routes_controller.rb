@@ -51,7 +51,7 @@ class Api::V1::RoutesController < ApplicationController
   private
 
   def route_params
-    params.require(:route).permit(:distance, :time_duration, :departure_time)
+    params.require(:route).permit(:distance, :time_duration, :departure_time, :start_station_id, :destination_station_id)
   end
 
   def set_route
