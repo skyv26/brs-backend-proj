@@ -16,16 +16,25 @@ class Api::V1::RoutesController < ApplicationController
 
   def create
     @route = Route.new(route_params)
+    obj = JSON.parse(RouteSerializer.new(@route).serialized_json)
     if @route.save
-      render json: {
-        message: 'Route created successfully'
-      }, status: :created
+      obj['data']['id'] = @route.id
+      obj[:status] = :created
+      obj[:message] = 'New route is added successfully !'
+      # render json: {
+      #   message: 'Route created successfully'
+      # }, status: :created
     else
-      render json: {
-        error_message: 'Route creations field',
-        errors: @route.errors.full_message
-      }, status: :unprocessable_entity
+      obj[:invalid_requests] = @route.errors.full_messages
+      obj[:status] = :bad_request
+      obj[:message] = 'Oops! Something is not correct.'
+      obj = obj.except('data')
     end
+      render json: obj
+      # render json: {
+      #   error_message: 'Route creations field',
+      #   errors: @route.errors.full_message
+      # }, status: :unprocessable_entity
   end
 
   def update
