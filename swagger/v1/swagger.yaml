@@ -21,7 +21,7 @@ paths:
         '200':
           description: successful
         '400':
-          description: Bad Request
+          description: bad request
       requestBody:
         content:
           application/json:
@@ -32,9 +32,11 @@ paths:
                   type: object
                   properties:
                     start_station_id:
-                      type: uuid
+                      type: string
+                      format: uuid
                     destination_station_id:
-                      type: uuid
+                      type: string
+                      format: uuid
                     distance:
                       type: integer
                     time_duration:
@@ -69,7 +71,7 @@ paths:
         '200':
           description: successful
         '400':
-          description: Bad Request
+          description: bad request
       requestBody:
         content:
           application/json:
@@ -91,6 +93,7 @@ paths:
                       type: integer
                     departure_time:
                       type: string
+                  required: []
     delete:
       summary: Delete Route
       tags:
