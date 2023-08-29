@@ -36,17 +36,17 @@ class Api::V1::ServicesController < ApplicationController
 
   def update
     @service = fetch_service
-    @service.update(service_params)
     obj = {}
-    if @service.save
+    status = :ok
+    if @service.update(service_params)
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
-      obj[:status] = :ok
-      obj[:message] = 'Service is updated successfully'
+      obj[:message] = 'Service updated successfully'
+      @service.save
     else
-      obj[:status] = :unprocessable_entity
-      obj[:message] = 'Please make sure that your ID is correct'
+      obj[:invalid_requests] = @station.errors.full_messages
+      status = :unprocessable_entity
     end
-    render json: obj
+    render json: obj, status:
   end
 
   private
