@@ -2,53 +2,59 @@ class Station < ApplicationRecord
   include StringValidator
   has_many :routes, foreign_key: 'start_station_id'
   has_many :routes, foreign_key: 'destination_station_id'
-  validate :name_validity
-  validate :city_validity
-  validate :state_validity
+  validate :validate_name_type
+  validate :validate_city_type
+  validate :validate_state_type
 
   private
 
-  def name_validity
-    errors.add(:name, 'is a required property') unless name.present?
-
-    if name_before_type_cast.is_a?(Integer) || 
-       name_before_type_cast.is_a?(TrueClass) || 
-       name_before_type_cast.is_a?(FalseClass) || 
+  def validate_name_type
+    if name_before_type_cast.is_a?(Integer) ||
+       name_before_type_cast.is_a?(TrueClass) ||
+       name_before_type_cast.is_a?(FalseClass) ||
        name_before_type_cast.is_a?(NilClass)
       errors.add(:name, 'must be a string')
-    elsif name.size > 20
+    end
+  end
+  
+  def validate_name_length
+    if name.size > 20
       errors.add(:name, 'should not be greater than 20 characters')
     elsif name.size <= 2
       errors.add(:name, 'should be valid and greater than 2 characters')
     end
   end
 
-  def city_validity
-    errors.add(:city, 'is a required property') unless city.present?
-
+  def validate_city_type
     if city_before_type_cast.is_a?(Integer) ||
        city_before_type_cast.is_a?(TrueClass) ||
        city_before_type_cast.is_a?(FalseClass) ||
        city_before_type_cast.is_a?(NilClass)
       errors.add(:city, 'must be a string')
-    elsif city.size > 20
+    end
+  end
+  
+  def validate_city_length
+    if city.size > 20
       errors.add(:city, 'should not be greater than 20 characters')
     elsif city.size <= 2
       errors.add(:city, 'should be valid and greater than 2 characters')
     end
   end
 
-  def state_validity
-    errors.add(:state, 'is a required property') unless state.present?
-
+  def validate_state_type
     if state_before_type_cast.is_a?(Integer) ||
        state_before_type_cast.is_a?(TrueClass) ||
        state_before_type_cast.is_a?(FalseClass) ||
        state_before_type_cast.is_a?(NilClass)
       errors.add(:state, 'must be a string')
-    elsif state.length > 20
+    end
+  end
+  
+  def validate_state_length
+    if state.size > 20
       errors.add(:state, 'should not be greater than 20 characters')
-    elsif state.length <= 2
+    elsif state.size <= 2
       errors.add(:state, 'should be valid and greater than 2 characters')
     end
   end
