@@ -1,0 +1,185 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/routes":
+    get:
+      summary: List Routes
+      tags:
+      - Routes
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Create New Route
+      tags:
+      - Routes
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                route:
+                  type: object
+                  properties:
+                    start_station_id:
+                      type: uuid
+                    destination_station_id:
+                      type: uuid
+                    distance:
+                      type: integer
+                    time_duration:
+                      type: integer
+                    departure_time:
+                      type: string
+                  required:
+                  - distance
+                  - time_duration
+                  - departure_time
+  "/api/v1/routes/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Route
+      tags:
+      - Routes
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: Update Route by ID
+      tags:
+      - Routes
+      parameters:
+      - name: id
+        in: path
+        description: Update a record by Id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                route:
+                  type: object
+                  properties:
+                    start_station_id:
+                      type: uuid
+                    destination_station_id:
+                      type: uuid
+                    distance:
+                      type: integer
+                    time_duration:
+                      type: integer
+                    departure_time:
+                      type: string
+    delete:
+      summary: Delete Route
+      tags:
+      - Routes
+      responses:
+        '200':
+          description: successful
+  "/api/v1/stations":
+    get:
+      summary: list stations
+      tags:
+      - Stations
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create station
+      tags:
+      - Stations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                station:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                  required:
+                  - name
+                  - city
+                  - state
+  "/api/v1/stations/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show station
+      tags:
+      - Stations
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update station
+      tags:
+      - Stations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                station:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+    delete:
+      summary: delete station
+      tags:
+      - Stations
+      responses:
+        '200':
+          description: successful
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000
