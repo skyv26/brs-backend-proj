@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Station, type: :model do
   subject { described_class.new(name: 'Station1', city: 'FTN', state: 'TN01AB1234') }
-  context 'table test cases checking for either bad argument or invalid information.' do
+  context 'test cases for either
+          bad or invalid arguments.' do
     describe Station do
       it 'name should not be nil' do
         subject.name = nil

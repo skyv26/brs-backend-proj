@@ -1,17 +1,34 @@
 require 'swagger_helper'
+require 'response_helper'
+
+def station_parameter_schema
+  {
+    name: :station,
+    in: :body,
+    schema: {
+      type: :object,
+      properties: {
+        station: {
+          type: :object,
+          properties: {
+            name: { type: :string },
+            city: { type: :string },
+            state: { type: :string }
+          }
+        }
+      }
+    }
+  }
+end
 
 RSpec.describe 'api/v1/stations', type: :request do
+  include ResponseHelper
+
   path '/api/v1/stations' do
     get('list stations') do
       tags 'Stations'
       response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
@@ -33,36 +50,20 @@ RSpec.describe 'api/v1/stations', type: :request do
           }
         }
       }
-
       response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
   end
 
   path '/api/v1/stations/{id}' do
-    # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
-
     get('show station') do
       tags 'Stations'
       response(200, 'successful') do
         let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
@@ -70,29 +71,10 @@ RSpec.describe 'api/v1/stations', type: :request do
     put('update station') do
       tags 'Stations'
       consumes 'application/json'
-      parameter name: :station, in: :body, schema: {
-        type: :object,
-        properties: {
-          station: {
-            type: :object,
-            properties: {
-              name: { type: :string },
-              city: { type: :string },
-              state: { type: :string }
-            }
-          }
-        }
-      }
+      parameter station_parameter_schema
       response(200, 'successful') do
         let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
@@ -101,14 +83,7 @@ RSpec.describe 'api/v1/stations', type: :request do
       tags 'Stations'
       response(200, 'successful') do
         let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end

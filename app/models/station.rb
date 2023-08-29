@@ -16,7 +16,7 @@ class Station < ApplicationRecord
       errors.add(:name, 'must be a string')
     end
   end
-  
+
   def validate_name_length
     if name.size > 20
       errors.add(:name, 'should not be greater than 20 characters')
@@ -33,7 +33,7 @@ class Station < ApplicationRecord
       errors.add(:city, 'must be a string')
     end
   end
-  
+
   def validate_city_length
     if city.size > 20
       errors.add(:city, 'should not be greater than 20 characters')
@@ -50,7 +50,7 @@ class Station < ApplicationRecord
       errors.add(:state, 'must be a string')
     end
   end
-  
+
   def validate_state_length
     if state.size > 20
       errors.add(:state, 'should not be greater than 20 characters')

@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Route, type: :model do
-  let(:station1) { 
+  let(:station1) do
     Station.create(
       name: 'Station1',
       city: 'FTN',
       state: 'TN01AB1234'
-    ) 
-  }
-  let(:station2) {
+    )
+  end
+  let(:station2) do
     Station.create(
       name: 'Station2',
       city: 'FTN',
       state: 'TN01AB1234'
     )
-  }
+  end
 
   let(:route) do
     described_class.new(
@@ -26,7 +26,9 @@ RSpec.describe Route, type: :model do
     )
   end
 
-  context 'table test cases checking for either bad argument or invalid information.' do
+  context 'test cases for
+           either bad or invalid
+           arguments.' do
     describe Route do
       it 'start_station should be exist and valid' do
         route[:start_station_id] = nil
