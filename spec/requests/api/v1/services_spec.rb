@@ -65,6 +65,11 @@ RSpec.describe 'api/v1/services', type: :request do
         after { |example| add_response(example) }
         run_test!
       end
+      response(422, 'invalid data') do
+        let(:id) { '123' }
+        after { |example| add_response(example) }
+        run_test!
+      end
     end
 
     delete('delete service') do
