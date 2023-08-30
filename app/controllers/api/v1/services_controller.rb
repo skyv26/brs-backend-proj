@@ -3,64 +3,65 @@ class Api::V1::ServicesController < ApplicationController
 
   def index
     service = Service.all
-    obj = JSON.parse(ServiceSerializer.new(service).serialized_json)
-    obj[:status] = :ok
-    render json: obj
+    render json: ServiceSerializer.new(service).serialized_json, status: :ok
   end
 
   def show
-    obj = JSON.parse(ServiceSerializer.new(fetch_service).serialized_json)
-    obj[:status] = :ok
-    render json: obj
+    render json: ServiceSerializer.new(fetch_service).serialized_json, status: :ok
   end
 
   def create
     @service = Service.new(service_params)
     obj = {}
+    status = :created
     if @service.save
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
-      obj[:status] = :created
       obj[:message] = 'New service is added successfully !'
     else
-      obj[:status] = :bad_request
+      obj[:invalid_requests] = @service.errors.full_messages
+      status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
     end
-    render json: obj
+    render json: obj, status:
   end
 
   def destroy
     @service = fetch_service
-    obj = {}
     if @service.delete
-      obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
-      obj[:status] = :ok
-      obj[:message] = 'Service is deleted successfully !'
+      render json: { message: 'Service is deleted successfully' }, status: :ok
     else
-      obj[:status] = :forbidden
-      obj[:message] = 'Please make sure that your ID is correct'
+      render json: { message: 'Service is not deleted' }, status: :unprocessable_entity
     end
-    render json: obj
   end
 
   def update
     @service = fetch_service
-    @service.update(service_params)
     obj = {}
-    if @service.save
+    status = :ok
+    if @service.update(service_params)
       obj = JSON.parse(ServiceSerializer.new(@service).serialized_json)
-      obj[:status] = :ok
-      obj[:message] = 'Service is updated successfully'
+      obj[:message] = 'Service updated successfully'
+      @service.save
     else
-      obj[:status] = :unprocessable_entity
-      obj[:message] = 'Please make sure that your ID is correct'
+      obj[:invalid_requests] = @service.errors.full_messages
+      status = :unprocessable_entity
     end
-    render json: obj
+    render json: obj, status:
   end
 
   private
 
   def fetch_service
     Service.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'service',
+        attributes: {}
+      }
+    }
+    render json: obj, status: :not_found
   end
 
   def service_params

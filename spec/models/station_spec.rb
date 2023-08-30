@@ -2,25 +2,29 @@ require 'rails_helper'
 
 RSpec.describe Station, type: :model do
   subject { described_class.new(name: 'Station1', city: 'FTN', state: 'TN01AB1234') }
+  context 'test cases for either
+          bad or invalid arguments.' do
+    describe Station do
+      it 'name should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+          subject.name = value
+          expect(route).to_not be_valid
+        end
+      end
 
-  describe 'Validations' do
-    it 'is valid with valid attributes' do
-      expect(subject).to be_valid
-    end
+      it 'city should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+          subject.city = value
+          expect(route).to_not be_valid
+        end
+      end
 
-    it 'is not valid without a name' do
-      subject.name = nil
-      expect(subject).to_not be_valid
-    end
-
-    it 'is not valid without a city' do
-      subject.city = nil
-      expect(subject).to_not be_valid
-    end
-
-    it 'is not valid with a name longer than 50 characters' do
-      subject.name = 'a' * 51
-      expect(subject).to_not be_valid
+      it 'state should a non-empy atleast 3 and less than 20 character string' do
+        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+          subject.state = value
+          expect(route).to_not be_valid
+        end
+      end
     end
   end
 end

@@ -1,27 +1,28 @@
 class Api::V1::StationsController < ApplicationController
   before_action :fetch_station, only: %i[update show destroy]
 
-  def index
-    @station = Station.all
-    render json: StationSerializer.new(@station).serialized_json, status: :ok
+  def show
+    render json: StationSerializer.new(fetch_station).serialized_json, status: :ok
   end
 
-  def show
+  def index
     @station = Station.all
     render json: StationSerializer.new(@station).serialized_json, status: :ok
   end
 
   def create
     @station = Station.new(station_params)
+    obj = {}
+    status = :created
     if @station.save
-      render json: {
-        message: 'Station is created successfully'
-      }, status: :created
+      obj = JSON.parse(StationSerializer.new(@station).serialized_json)
+      obj[:message] = 'New Station is added successfully !'
     else
-      render json: {
-        message: 'Station is not created'
-      }, status: :unprocessable_entity
+      obj[:invalid_requests] = @station.errors.full_messages
+      status = :bad_request
+      obj[:message] = 'Oops! Something is not correct.'
     end
+    render json: obj, status:
   end
 
   def destroy
@@ -35,23 +36,32 @@ class Api::V1::StationsController < ApplicationController
 
   def update
     @station = fetch_station
-    @station.update(station_params)
-
-    if @station.save
+    obj = {}
+    status = :ok
+    if @station.update(station_params)
       obj = JSON.parse(StationSerializer.new(@station).serialized_json)
-      obj[:message] = 'Route updated successfully'
-      render json: obj, status: :ok
+      obj[:message] = 'Station updated successfully'
+      @station.save
     else
-      render json: {
-        message: 'Station is not updated', station: @station
-      }, status: :unprocessable_entity
+      obj[:invalid_requests] = @station.errors.full_messages
+      status = :unprocessable_entity
     end
+    render json: obj, status:
   end
 
   private
 
   def fetch_station
     Station.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'station',
+        attributes: {}
+      }
+    }
+    render json: obj, status: :not_found
   end
 
   def station_params
