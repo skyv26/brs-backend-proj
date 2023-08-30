@@ -56,6 +56,7 @@ RSpec.describe 'api/v1/routes', type: :request do
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('Show Route') do
+      tags 'Routes'
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
@@ -63,6 +64,7 @@ RSpec.describe 'api/v1/routes', type: :request do
     end
 
     put('Update Route by ID') do
+      tags 'Routes'
       consumes 'application/json'
       parameter route_parameter_schema
       response(200, 'successful') do
@@ -79,6 +81,7 @@ RSpec.describe 'api/v1/routes', type: :request do
     end
 
     delete('Delete Route') do
+      tags 'Routes'
       response(200, 'successful') do
         let(:id) { '123' }
         after { |example| add_response(example) }

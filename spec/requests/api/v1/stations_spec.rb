@@ -27,7 +27,7 @@ RSpec.describe 'api/v1/stations', type: :request do
 
   path '/api/v1/stations' do
     get('list stations') do
-      tags 'Stations'
+      tags 'Station'
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
@@ -35,7 +35,7 @@ RSpec.describe 'api/v1/stations', type: :request do
     end
 
     post('create station') do
-      tags 'Stations'
+      tags 'Station'
       consumes 'application/json'
       parameter station_parameter_schema(%w[name city state])
       response(200, 'successful') do
@@ -48,7 +48,7 @@ RSpec.describe 'api/v1/stations', type: :request do
   path '/api/v1/stations/{id}' do
     parameter name: 'id', in: :path, type: :string, description: 'id'
     get('show station') do
-      tags 'Stations'
+      tags 'Station'
       response(200, 'successful') do
         let(:id) { '123' }
         after { |example| add_response(example) }
@@ -57,7 +57,7 @@ RSpec.describe 'api/v1/stations', type: :request do
     end
 
     put('update station') do
-      tags 'Stations'
+      tags 'Station'
       consumes 'application/json'
       parameter station_parameter_schema
       response(200, 'successful') do
@@ -68,7 +68,7 @@ RSpec.describe 'api/v1/stations', type: :request do
     end
 
     delete('delete station') do
-      tags 'Stations'
+      tags 'Station'
       response(200, 'successful') do
         let(:id) { '123' }
         after { |example| add_response(example) }
