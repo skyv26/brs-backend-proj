@@ -1,6 +1,7 @@
 class Service < ApplicationRecord
-  validate :validate_name_type
+  validate :validate_name_presence, :validate_icon_presence
   validate :validate_icon_type
+  validate :validate_name_type
 
   private
 

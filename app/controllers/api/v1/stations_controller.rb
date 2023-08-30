@@ -2,7 +2,7 @@ class Api::V1::StationsController < ApplicationController
   before_action :fetch_station, only: %i[update show destroy]
 
   def show
-    render json: StationSerializer.new(@station).serialized_json, status: :ok
+    render json: StationSerializer.new(fetch_station).serialized_json, status: :ok
   end
 
   def index

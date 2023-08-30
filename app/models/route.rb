@@ -1,8 +1,8 @@
 class Route < ApplicationRecord
   belongs_to :start_station, class_name: 'Station', foreign_key: 'start_station_id'
   belongs_to :destination_station, class_name: 'Station', foreign_key: 'destination_station_id'
-  validate :validate_distance_type
-  validate :validate_time_duration_type
+  validate :validate_distance_presence, :validate_distance_type
+  validate :validate_time_duration_presence, :validate_time_duration_type
   validates :departure_time, presence: true
   validate :departure_time_validity
 

@@ -2,6 +2,9 @@ class Station < ApplicationRecord
   include StringValidator
   has_many :routes, foreign_key: 'start_station'
   has_many :routes, foreign_key: 'destination_station'
+  validates :name, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
   validate :validate_name_type
   validate :validate_city_type
   validate :validate_state_type
