@@ -43,7 +43,7 @@ class Api::V1::ServicesController < ApplicationController
       obj[:message] = 'Service updated successfully'
       @service.save
     else
-      obj[:invalid_requests] = @station.errors.full_messages
+      obj[:invalid_requests] = @service.errors.full_messages
       status = :unprocessable_entity
     end
     render json: obj, status:
