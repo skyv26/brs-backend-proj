@@ -30,6 +30,7 @@ RSpec.describe 'api/v1/routes', type: :request do
   path '/api/v1/routes' do
     get('List Routes') do
       tags 'Routes'
+      
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
