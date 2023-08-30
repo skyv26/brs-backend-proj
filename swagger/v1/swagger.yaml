@@ -57,11 +57,15 @@ paths:
         type: string
     get:
       summary: Show Route
+      tags:
+      - Routes
       responses:
         '200':
           description: successful
     put:
       summary: Update Route by ID
+      tags:
+      - Routes
       parameters: []
       responses:
         '200':
@@ -92,20 +96,43 @@ paths:
                   required: []
     delete:
       summary: Delete Route
+      tags:
+      - Routes
       responses:
         '200':
           description: successful
   "/api/v1/services":
     get:
       summary: list services
+      tags:
+      - Services
       responses:
         '200':
           description: successful
     post:
       summary: create service
+      tags:
+      - Services
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    icon:
+                      type: string
+                  required:
+                  - name
+                  - icon
   "/api/v1/services/{id}":
     parameters:
     - name: id
@@ -116,21 +143,41 @@ paths:
         type: string
     get:
       summary: show service
-      responses:
-        '200':
-          description: successful
-    patch:
-      summary: update service
+      tags:
+      - Services
       responses:
         '200':
           description: successful
     put:
       summary: update service
+      tags:
+      - Services
+      parameters: []
       responses:
         '200':
           description: successful
+        '422':
+          description: invalid data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    icon:
+                      type: string
+                  required:
+                  - name
+                  - icon
     delete:
       summary: delete service
+      tags:
+      - Services
       responses:
         '200':
           description: successful
@@ -138,14 +185,14 @@ paths:
     get:
       summary: list stations
       tags:
-      - Stations
+      - Station
       responses:
         '200':
           description: successful
     post:
       summary: create station
       tags:
-      - Stations
+      - Station
       parameters: []
       responses:
         '200':
@@ -180,14 +227,14 @@ paths:
     get:
       summary: show station
       tags:
-      - Stations
+      - Station
       responses:
         '200':
           description: successful
     put:
       summary: update station
       tags:
-      - Stations
+      - Station
       parameters: []
       responses:
         '200':
@@ -211,7 +258,7 @@ paths:
     delete:
       summary: delete station
       tags:
-      - Stations
+      - Station
       responses:
         '200':
           description: successful
