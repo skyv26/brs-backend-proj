@@ -12,7 +12,7 @@ def service_parameter_schema(required_properties = [])
           type: :object,
           properties: {
             name: { type: :string },
-            icon: { type: :string },
+            icon: { type: :string }
           },
           required: required_properties
         }
@@ -66,7 +66,6 @@ RSpec.describe 'api/v1/services', type: :request do
         run_test!
       end
       response(422, 'invalid data') do
-        let(:id) { '123' }
         after { |example| add_response(example) }
         run_test!
       end
@@ -75,7 +74,6 @@ RSpec.describe 'api/v1/services', type: :request do
     delete('delete service') do
       tags 'Services'
       response(200, 'successful') do
-        let(:id) { '123' }
         after { |example| add_response(example) }
         run_test!
       end

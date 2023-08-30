@@ -68,13 +68,11 @@ RSpec.describe 'api/v1/routes', type: :request do
       consumes 'application/json'
       parameter route_parameter_schema
       response(200, 'successful') do
-        let(:id) { '123' }
         after { |example| add_response(example) }
         run_test!
       end
 
       response(400, 'bad request') do
-        let(:id) { '123' }
         after { |example| add_response(example) }
         run_test!
       end
@@ -83,7 +81,6 @@ RSpec.describe 'api/v1/routes', type: :request do
     delete('Delete Route') do
       tags 'Routes'
       response(200, 'successful') do
-        let(:id) { '123' }
         after { |example| add_response(example) }
         run_test!
       end
