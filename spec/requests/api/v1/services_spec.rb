@@ -25,8 +25,8 @@ RSpec.describe 'api/v1/services', type: :request do
   include ResponseHelper
 
   path '/api/v1/services' do
-
     get('list services') do
+      tags 'Services'
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
@@ -34,7 +34,7 @@ RSpec.describe 'api/v1/services', type: :request do
     end
 
     post('create service') do
-      tags 'Routes'
+      tags 'Services'
       consumes 'application/json'
       parameter route_parameter_schema(%w[name icon])
       response(200, 'successful') do
@@ -49,6 +49,7 @@ RSpec.describe 'api/v1/services', type: :request do
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
     get('show service') do
+      tags 'Services'
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
@@ -56,7 +57,7 @@ RSpec.describe 'api/v1/services', type: :request do
     end
 
     put('update service') do
-      tags 'Routes'
+      tags 'Services'
       consumes 'application/json'
       parameter route_parameter_schema(%w[name icon])
       response(200, 'successful') do
@@ -67,6 +68,7 @@ RSpec.describe 'api/v1/services', type: :request do
     end
 
     delete('delete service') do
+      tags 'Services'
       response(200, 'successful') do
         let(:id) { '123' }
         after { |example| add_response(example) }
