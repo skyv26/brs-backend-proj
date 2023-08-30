@@ -1,6 +1,26 @@
 require 'swagger_helper'
 require 'response_helper'
 
+def service_parameter_schema(required_properties = [])
+  {
+    name: :service,
+    in: :body,
+    schema: {
+      type: :object,
+      properties: {
+        service: {
+          type: :object,
+          properties: {
+            name: { type: :string },
+            icon: { type: :string },
+          },
+          required: required_properties
+        }
+      }
+    }
+  }
+end
+
 RSpec.describe 'api/v1/services', type: :request do
   include ResponseHelper
 
@@ -14,6 +34,9 @@ RSpec.describe 'api/v1/services', type: :request do
     end
 
     post('create service') do
+      tags 'Routes'
+      consumes 'application/json'
+      parameter route_parameter_schema(%w[name icon])
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
@@ -33,6 +56,9 @@ RSpec.describe 'api/v1/services', type: :request do
     end
 
     put('update service') do
+      tags 'Routes'
+      consumes 'application/json'
+      parameter route_parameter_schema(%w[name icon])
       response(200, 'successful') do
         let(:id) { '123' }
         after { |example| add_response(example) }
