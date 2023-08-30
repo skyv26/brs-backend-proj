@@ -36,7 +36,7 @@ RSpec.describe 'api/v1/services', type: :request do
     post('create service') do
       tags 'Services'
       consumes 'application/json'
-      parameter route_parameter_schema(%w[name icon])
+      parameter service_parameter_schema(%w[name icon])
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
@@ -59,7 +59,7 @@ RSpec.describe 'api/v1/services', type: :request do
     put('update service') do
       tags 'Services'
       consumes 'application/json'
-      parameter route_parameter_schema(%w[name icon])
+      parameter service_parameter_schema(%w[name icon])
       response(200, 'successful') do
         let(:id) { '123' }
         after { |example| add_response(example) }
