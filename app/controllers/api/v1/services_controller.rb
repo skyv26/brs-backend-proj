@@ -22,7 +22,7 @@ class Api::V1::ServicesController < ApplicationController
       status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
     end
-    render json: obj, status: status
+    render json: obj, status:
   end
 
   def destroy
