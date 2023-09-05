@@ -2,67 +2,68 @@ class Api::V1::UsersController < ApplicationController
   before_action :fetch_user, only: %i[update show destroy]
 
   def index
-    @users = User.all
-    @users = JSON.parse(UserSerializer.new(@users).serialized_json)
-    @users[:status] = :ok
-    render json: @users
+    @user = User.all
+    render json: UserSerializer.new(@user).serialized_json, status: :ok
   end
 
   def show
-    obj = JSON.parse(UserSerializer.new(fetch_user).serialized_json)
-    obj[:status] = :ok
-    render json: obj
+    render json: UserSerializer.new(fetch_user).serialized_json, status: :ok
   end
 
   def create
     @user = User.new(user_params)
     obj = {}
+    status = :created
     if @user.save
       obj = JSON.parse(UserSerializer.new(@user).serialized_json)
-      obj[:status] = :created
       obj[:message] = 'New User is added successfully !'
     else
-      obj[:status] = :bad_request
+      obj[:invalid_requests] = @user.errors.full_messages
+      status = :bad_request
       obj[:message] = 'Oops! Something is not correct.'
     end
-    render json: obj
+    render json: obj, status:
   end
 
   def destroy
     @user = fetch_user
-    obj = {}
     if @user.delete
-      obj = JSON.parse(UserSerializer.new(@user).serialized_json)
-      obj[:status] = :ok
-      obj[:message] = 'User is deleted successfully !'
+      render json: { message: 'User is deleted successfully' }, status: :ok
     else
-      obj[:status] = :forbidden
-      obj[:message] = 'Please make sure that your ID is correct'
+      render json: { message: 'User is not deleted' }, status: :unprocessable_entity
     end
-    render json: obj
   end
 
   def update
     @user = fetch_user
-    @user.update(user_params)
     obj = {}
-    if @user.save
+    status = :ok
+    if @user.update(user_params)
       obj = JSON.parse(UserSerializer.new(@user).serialized_json)
-      obj[:status] = :ok
-      obj[:message] = 'User is updated successfully'
+      obj[:message] = 'User updated successfully'
+      @user.save
     else
-      obj[:status] = :unprocessable_entity
-      obj[:message] = 'Please make sure that your ID is correct'
+      obj[:invalid_requests] = @user.errors.full_messages
+      status = :unprocessable_entity
     end
-    render json: obj
+    render json: obj, status:
   end
 
   private
 
   def fetch_user
     User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'user',
+        attributes: {}
+      }
+    }
+    render json: obj, status: :not_found
   end
-
+  
   def user_params
     params.require(:user).permit('full_name', 'email_address', 'date_of_birth', 'mobile_no', 'password',
                                  'profile_photo', 'role', 'security_question', 'security_answer')
