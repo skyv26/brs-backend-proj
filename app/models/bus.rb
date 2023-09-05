@@ -1,7 +1,7 @@
 class Bus < ApplicationRecord
   validates :name, presence: true
-  validates :bus_number, presence: true, format: { with: /\A\w+\z/, message: 'should be alphanumeric' }
-  validates :capacity, presence: true, numericality: { only_numeric: true }
+  validates :bus_number, presence: true
+  validates :capacity, presence: true
 
   validate :validate_bus_name
   validate :validate_bus_enquiry_number
