@@ -18,6 +18,10 @@ def bus_parameter_schema(required_properties = [])
             route_ids: {
               type: :array,
               items: { type: :string, format: :uuid } 
+            },
+            service_ids: {
+              type: :array,
+              items: { type: :string, format: :uuid } 
             } 
           },
           required: required_properties
