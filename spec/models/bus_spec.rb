@@ -32,9 +32,19 @@ RSpec.describe Bus, type: :model do
                         security_question: "What is your first pet's name?", security_answer: 'cat')
   end
 
+  let(:service1) do
+    Service.create(name: 'Air Conditioner', icon: 'path_to_the_icon')
+  end
+
+  let(:service2) do
+    Service.create(name: 'Pure Water', icon: 'path_to_the_icon')
+  end
+
   let(:bus) do
     described_class.new(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd', agency: )
   end
+
+
 
   context 'test cases for either bad or invalid
   arguments.' do
@@ -42,6 +52,8 @@ RSpec.describe Bus, type: :model do
       [nil, '', true, '12', false, 1234].each do |value|
         it 'name should be a string' do
           bus.routes << route
+          bus.services << service1
+          bus.services << service2
           bus[:name] = value
           expect(bus).to_not be_valid
         end
@@ -50,6 +62,8 @@ RSpec.describe Bus, type: :model do
       [nil, '', true, '12', false, 1234].each do |value|
         it 'enquiry_number should be a string' do
           bus.routes << route
+          bus.services << service1
+          bus.services << service2
           bus[:enquiry_number] = value
           expect(bus).to_not be_valid
         end
@@ -58,6 +72,8 @@ RSpec.describe Bus, type: :model do
       [nil, '', true, '12', false, 1234].each do |value|
         it 'enquiry_number should be a string' do
           bus.routes << route
+          bus.services << service1
+          bus.services << service2
           bus[:bus_number] = value
           expect(bus).to_not be_valid
         end
@@ -66,6 +82,8 @@ RSpec.describe Bus, type: :model do
       [nil, '', true, '12', false].each do |value|
         it 'enquiry_number should be a string' do
           bus.routes << route
+          bus.services << service1
+          bus.services << service2
           bus[:capacity] = value
           expect(bus).to_not be_valid
         end
