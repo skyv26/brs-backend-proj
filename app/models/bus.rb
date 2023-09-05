@@ -5,6 +5,8 @@ class Bus < ApplicationRecord
 
   validate :validate_bus_name
   validate :validate_bus_enquiry_number
+  validate :validate_bus_number
+  validate :validate_bus_capacity
 
   belongs_to :agency, class_name: 'User'  
   has_many :bus_routes
@@ -35,5 +37,21 @@ class Bus < ApplicationRecord
     elsif enquiry_number.size <= 6
       errors.add(:enquiry_number, 'should be valid and greater than 2 characters')
     end
+  end
+
+  def validate_bus_number
+    errors.add(:bus_number, 'must be a string') unless bus_number_before_type_cast.is_a?(String)
+
+    return unless bus_number_before_type_cast.is_a?(String)
+
+    if bus_number.size > 16
+      errors.add(:bus_number, 'should not be greater than 50 characters')
+    elsif bus_number.size <= 6
+      errors.add(:bus_number, 'should be valid and greater than 2 characters')
+    end
+  end
+
+  def validate_bus_capacity
+    errors.add(:capacity, 'must be an integer') unless capacity_before_type_cast.is_a?(Integer)
   end
 end
