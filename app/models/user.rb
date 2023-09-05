@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validate :validate_email_address
   validate :validate_date_of_birth
 
+  has_many :buses
+
   private
 
   def validate_full_name
