@@ -45,6 +45,30 @@ RSpec.describe Bus, type: :model do
           bus[:name] = value
           expect(bus).to_not be_valid
         end
+      end  
+
+      [nil, '', true, '12', false, 1234].each do |value|
+        it 'enquiry_number should be a string' do
+          bus.routes << route
+          bus[:enquiry_number] = value
+          expect(bus).to_not be_valid
+        end
+      end
+
+      [nil, '', true, '12', false, 1234].each do |value|
+        it 'enquiry_number should be a string' do
+          bus.routes << route
+          bus[:bus_number] = value
+          expect(bus).to_not be_valid
+        end
+      end
+
+      [nil, '', true, '12', false].each do |value|
+        it 'enquiry_number should be a string' do
+          bus.routes << route
+          bus[:capacity] = value
+          expect(bus).to_not be_valid
+        end
       end
     end
   end
