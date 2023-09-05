@@ -1,28 +1,51 @@
 require 'rails_helper'
 
 RSpec.describe Bus, type: :model do
-  before(:each) do
-    @bus = Bus.create(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd')
+  let(:station1) do
+    Station.create(
+      name: 'Station1',
+      city: 'FTN',
+      state: 'TN01AB1234'
+    )
+  end
+  let(:station2) do
+    Station.create(
+      name: 'Station2',
+      city: 'FTN',
+      state: 'TN01AB1234'
+    )
   end
 
-  describe 'Creat Object test ' do
-    it 'Check the bus object' do
-      expect(@bus).to be_valid
-    end
+  let(:route) do
+    Route.create(
+      start_station: station1,
+      destination_station: station2,
+      distance: 100,
+      time_duration: 120,
+      departure_time: '2023-07-25 10:00:00'
+    )
+  end
 
-    it 'Check the bus object presence validation' do
-      @bus.capacity = nil
-      expect(@bus).not_to be_valid
-    end
+  let(:agency) do
+    User.create(full_name: 'mike benson', email_address: 'mike@benson', date_of_birth: '2000-01-01',
+                        mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
+                        security_question: "What is your first pet's name?", security_answer: 'cat')
+  end
 
-    it 'Check the bus object numeric validation for capacity' do
-      @bus.capacity = '80f'
-      expect(@bus).not_to be_valid
-    end
+  let(:bus) do
+    described_class.new(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd', agency: )
+  end
 
-    it 'Check the bus object name validation' do
-      @bus.name = 'Bus hjvfdsdszdsxgf1hgfdchgfhtcghhchfvgchrsrshdjhgyj'
-      expect(@bus).to_not be_valid
+  context 'test cases for either bad or invalid
+  arguments.' do
+    describe Bus do
+      [nil, '', true, '12', false, 1234].each do |value|
+        it 'name should be a string' do
+          bus.routes << route
+          bus[:name] = value
+          expect(bus).to_not be_valid
+        end
+      end
     end
   end
 end
