@@ -1,4 +1,4 @@
 class BusSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :bus_number, :capacity
+  attributes :name, :bus_number, :capacity, :routes, :agency
 end
