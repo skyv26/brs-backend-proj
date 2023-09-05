@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validate :validate_date_of_birth
 
   has_many :buses
+  has_many :reservations
 
   private
 
