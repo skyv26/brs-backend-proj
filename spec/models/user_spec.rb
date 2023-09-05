@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { described_class.new(full_name: 'mike benson', email_address: 'mike@benson', date_of_birth: '2000-01-01',
-  mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
-  security_question: "What is your first pet's name?", security_answer: 'cat') }
+  subject do
+    described_class.new(full_name: 'mike benson', email_address: 'mike@benson', date_of_birth: '2000-01-01',
+                        mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
+                        security_question: "What is your first pet's name?", security_answer: 'cat')
+  end
 
   context 'test cases for either bad or invalid arguments.' do
     describe User do
