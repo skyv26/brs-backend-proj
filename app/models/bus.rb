@@ -10,8 +10,9 @@ class Bus < ApplicationRecord
 
   belongs_to :agency, class_name: 'User'
   has_many :bus_routes, dependent: :destroy
+  has_many :bus_services, dependent: :destroy
   has_many :routes, through: :bus_routes
-  has_many :services, through: :busservices
+  has_many :services, through: :bus_services
 
   private
 
