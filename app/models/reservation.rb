@@ -9,6 +9,9 @@ class Reservation < ApplicationRecord
   validate :validate_amount_paid
   validate :validate_status
 
+  belongs_to :user
+  belongs_to :bus
+
   private
 
   def validate_berth_number
