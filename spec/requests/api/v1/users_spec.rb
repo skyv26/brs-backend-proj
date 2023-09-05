@@ -8,7 +8,7 @@ def user_parameter_schema(required_properties = [])
     schema: {
       type: :object,
       properties: {
-        station: {
+        user: {
           type: :object,
           properties: {
             full_name: { type: :string },
