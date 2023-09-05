@@ -8,8 +8,8 @@ class Bus < ApplicationRecord
   validate :validate_bus_number
   validate :validate_bus_capacity
 
-  belongs_to :agency, class_name: 'User'  
-  has_many :bus_routes
+  belongs_to :agency, class_name: 'User'
+  has_many :bus_routes, dependent: :destroy
   has_many :routes, through: :bus_routes
   has_many :services, through: :busservices
 
