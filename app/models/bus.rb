@@ -13,6 +13,7 @@ class Bus < ApplicationRecord
   has_many :bus_services, dependent: :destroy
   has_many :routes, through: :bus_routes
   has_many :services, through: :bus_services
+  has_many :reservations
 
   private
 
