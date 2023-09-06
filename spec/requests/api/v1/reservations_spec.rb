@@ -14,8 +14,7 @@ def reservation_parameter_schema(required_properties = [], include_status = fals
             user_id: { type: :string, format: :uuid },
             bus_id: { type: :string, format: :uuid },
             berth_number: { type: :integer },
-            refund_status: { type: :string },
-            amount_paid: { type: :decimal }
+            amount_paid: { type: :integer }
           },
           required: required_properties
         }
@@ -26,6 +25,7 @@ def reservation_parameter_schema(required_properties = [], include_status = fals
   # Conditionally add the 'status' attribute based on 'include_status'
   if include_status
     schema[:schema][:properties][:reservation][:properties][:status] = { type: :boolean }
+    schema[:schema][:properties][:reservation][:properties][:refund_status] = { type: :string }
   end
 
   schema
