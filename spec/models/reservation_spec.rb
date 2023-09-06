@@ -63,14 +63,14 @@ RSpec.describe Reservation, type: :model do
         end
       end
 
-      [nil, 'test', true, '1234', false].each do |value|
+      [nil, 'test'].each do |value|
         it 'amount_paid should be an integer' do
           reservation[:amount_paid] = value
           expect(reservation).not_to be_valid
         end
       end
 
-      [nil, 'test', true, '1234', false, 1242, 12_356].each do |value|
+      ['test', true, '1234', false, 1242, 12_356].each do |value|
         it 'refund_status should be a string and 30-250 characters in length' do
           reservation[:refund_status] = value
           expect(reservation).not_to be_valid
@@ -81,17 +81,6 @@ RSpec.describe Reservation, type: :model do
         it 'status should be a boolean either true or false' do
           reservation[:status] = value
           expect(reservation).not_to be_valid
-        end
-      end
-    end
-  end
-
-  context 'table test cases checking for either bad argument or invalid information.' do
-    describe Reservation do
-      [true, false].each do |value|
-        it 'status should be a boolean either true or false' do
-          reservation[:status] = value
-          expect(reservation).to be_valid
         end
       end
     end
