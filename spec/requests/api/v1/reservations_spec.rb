@@ -72,7 +72,7 @@ RSpec.describe 'api/v1/reservations', type: :request do
     put('Update Reservation by ID') do
       tags 'Reservations'
       consumes 'application/json'
-      parameter reservation_parameter_schema(, true)
+      parameter reservation_parameter_schema([], true)
       response(200, 'successful') do
         after { |example| add_response(example) }
         run_test!
