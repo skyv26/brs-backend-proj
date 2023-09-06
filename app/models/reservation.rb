@@ -1,10 +1,10 @@
 class Reservation < ApplicationRecord
   validates :berth_number, presence: true
-  validates :amount_paid, presence: true
-
+  validates :amount_paid, presence: true, numericality: true
+  validates :status, presence: true
+  
   validate :validate_reservation_berth_number
   validate :validate_reservation_refund_status
-  validate :validate_reservation_amount_paid
   validate :validate_reservation_status
 
   belongs_to :user
@@ -14,15 +14,6 @@ class Reservation < ApplicationRecord
 
   def validate_reservation_berth_number
     errors.add(:berth_number, 'must be an integer') unless berth_number_before_type_cast.is_a?(Integer)
-  end
-
-  def validate_reservation_amount_paid
-    rreturn if amount_paid.blank? # Allow nil or empty value
-
-    p amount_paid.class
-    unless amount_paid.is_a?(Integer) || amount_paid.is_a?(BigDecimal) || amount_paid.is_a?(Decimal) || amount_paid.is_a?(Float)
-      errors.add(:amount_paid, 'must be an integer or a float')
-    end
   end
 
   def validate_reservation_refund_status
@@ -38,6 +29,13 @@ class Reservation < ApplicationRecord
   end
 
   def validate_reservation_status
+    return if status.blank? # Allow nil or empty value
+
+    unless status_before_type_cast.kind_of?(TrueClass) ||
+          status_before_type_cast.kind_of?(FalseClass)
+      errors.add(:status, 'must be a boolean either true or false')
+    end
+
     unless status.kind_of?(TrueClass) ||
           status.kind_of?(FalseClass)
       errors.add(:status, 'must be a boolean either true or false')

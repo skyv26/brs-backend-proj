@@ -37,7 +37,7 @@ class Bus < ApplicationRecord
     if enquiry_number.size > 16
       errors.add(:enquiry_number, 'should not be greater than 50 characters')
     elsif enquiry_number.size <= 6
-      errors.add(:enquiry_number, 'should be valid and greater than 2 characters')
+      errors.add(:enquiry_number, 'should be valid and greater than 6 characters')
     end
   end
 
