@@ -2,7 +2,7 @@ require 'swagger_helper'
 require 'response_helper'
 
 def reservation_parameter_schema(required_properties = [], include_status = false)
-  {
+  schema = {
     name: :reservation,
     in: :body,
     schema: {
@@ -21,10 +21,14 @@ def reservation_parameter_schema(required_properties = [], include_status = fals
         }
       }
     }
-    if include_status
-      schema[:schema][:properties][:reservation][:properties][:status] = { type: :boolean }
-    end
   }
+
+  # Conditionally add the 'status' attribute based on 'include_status'
+  if include_status
+    schema[:schema][:properties][:reservation][:properties][:status] = { type: :boolean }
+  end
+
+  schema
 end
 RSpec.describe 'api/v1/reservations', type: :request do
 
