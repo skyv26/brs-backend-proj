@@ -14,7 +14,7 @@ def reservation_parameter_schema(required_properties = [], include_status = fals
             user_id: { type: :string, format: :uuid },
             bus_id: { type: :string, format: :uuid },
             berth_number: { type: :integer },
-            amount_paid: { type: :integer }
+            amount_paid: { type: :number, format: :decimal }
           },
           required: required_properties
         }

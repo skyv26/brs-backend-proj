@@ -14,6 +14,7 @@ def bus_parameter_schema(required_properties = [])
             name: { type: :string },
             enquiry_number: { type: :string },
             bus_number: { type: :string },
+            capacity: { type: :integer },
             agency_id: { type: :string, format: :uuid },
             route_ids: {
               type: :array,

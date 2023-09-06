@@ -151,7 +151,8 @@ paths:
                     berth_number:
                       type: integer
                     amount_paid:
-                      type: integer
+                      type: number
+                      format: decimal
                   required:
                   - berth_number
                   - amount_paid
@@ -200,7 +201,8 @@ paths:
                     berth_number:
                       type: integer
                     amount_paid:
-                      type: integer
+                      type: number
+                      format: decimal
                     status:
                       type: boolean
                     refund_status:
