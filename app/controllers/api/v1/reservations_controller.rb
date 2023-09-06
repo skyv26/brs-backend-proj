@@ -1,5 +1,3 @@
-require 'rack/utils'
-
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show update destroy]
 
@@ -16,7 +14,8 @@ class Api::V1::ReservationsController < ApplicationController
     @reservation = set_reservation
     obj = {}
     status = :ok
-    if @reservation.update(route_params)
+    @reservation[:amount_paid] = @reservation[:amount_paid].to_d
+    if @reservation.update(reservation_params)
       obj = JSON.parse(ReservationSerializer.new(@reservation).serialized_json)
       obj[:message] = 'Reservation updated successfully'
       @reservation.save
@@ -30,17 +29,18 @@ class Api::V1::ReservationsController < ApplicationController
   def destroy
     @reservation = set_reservation
     return unless @reservation.destroy
-
-    obj = JSON.parse(ReservationSerializer.new(@route).serialized_json)
+    obj = JSON.parse(ReservationSerializer.new(@reservation).serialized_json)
     obj[:message] = 'Reservation deleted successfully'
     render json: obj, status: :ok
   end
 
   def create
-    @reservation = Reservation.new(route_params)
+    @reservation = Reservation.new(reservation_params)
     status = :created
     obj = {}
-    if @route.save
+    @reservation[:amount_paid] = @reservation[:amount_paid].to_d
+    p @reservation
+    if @reservation.save
       obj = JSON.parse(ReservationSerializer.new(@reservation).serialized_json)
       obj[:message] = 'New reservation is added successfully !'
     else
