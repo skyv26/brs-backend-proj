@@ -25,10 +25,11 @@ class Api::V1::ReservationsController < ApplicationController
     end
     render json: obj, status:
   end
-  
+
   def destroy
     @reservation = set_reservation
     return unless @reservation.destroy
+
     obj = JSON.parse(ReservationSerializer.new(@reservation).serialized_json)
     obj[:message] = 'Reservation deleted successfully'
     render json: obj, status: :ok

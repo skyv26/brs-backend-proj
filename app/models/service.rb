@@ -5,6 +5,7 @@ class Service < ApplicationRecord
 
   has_many :bus_services, dependent: :destroy
   has_many :buses, through: :bus_services
+
   private
 
   def validate_name_type

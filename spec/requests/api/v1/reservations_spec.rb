@@ -1,7 +1,7 @@
 require 'swagger_helper'
 require 'response_helper'
 
-def reservation_parameter_schema(required_properties = [], include_status = false)
+def reservation_parameter_schema(required_properties = [], include_status: false)
   schema = {
     name: :reservation,
     in: :body,
@@ -31,7 +31,6 @@ def reservation_parameter_schema(required_properties = [], include_status = fals
   schema
 end
 RSpec.describe 'api/v1/reservations', type: :request do
-
   path '/api/v1/reservations' do
     get('List Reservations') do
       tags 'Reservations'

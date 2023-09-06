@@ -2,7 +2,7 @@ class Reservation < ApplicationRecord
   validates :berth_number, presence: true
   validates :amount_paid, presence: true, numericality: true
   validates :status, presence: true
-  
+
   validate :validate_reservation_berth_number
   validate :validate_reservation_refund_status
   validate :validate_reservation_status
@@ -31,15 +31,14 @@ class Reservation < ApplicationRecord
   def validate_reservation_status
     return if status.blank? # Allow nil or empty value
 
-    unless status_before_type_cast.kind_of?(TrueClass) ||
-          status_before_type_cast.kind_of?(FalseClass)
+    unless status_before_type_cast.is_a?(TrueClass) ||
+           status_before_type_cast.is_a?(FalseClass)
       errors.add(:status, 'must be a boolean either true or false')
     end
 
-    unless status.kind_of?(TrueClass) ||
-          status.kind_of?(FalseClass)
+    unless status.is_a?(TrueClass) ||
+           status.is_a?(FalseClass)
       errors.add(:status, 'must be a boolean either true or false')
     end
   end
-  
 end

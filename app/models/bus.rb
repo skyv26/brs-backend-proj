@@ -22,7 +22,7 @@ class Bus < ApplicationRecord
 
     return unless name_before_type_cast.is_a?(String)
 
-    if name.size > 40 
+    if name.size > 40
       errors.add(:name, 'should not be greater than 50 characters')
     elsif name.size <= 2
       errors.add(:name, 'should be valid and greater than 2 characters')

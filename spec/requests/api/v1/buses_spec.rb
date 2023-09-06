@@ -18,12 +18,12 @@ def bus_parameter_schema(required_properties = [])
             agency_id: { type: :string, format: :uuid },
             route_ids: {
               type: :array,
-              items: { type: :string, format: :uuid } 
+              items: { type: :string, format: :uuid }
             },
             service_ids: {
               type: :array,
-              items: { type: :string, format: :uuid } 
-            } 
+              items: { type: :string, format: :uuid }
+            }
           },
           required: required_properties
         }
@@ -33,9 +33,7 @@ def bus_parameter_schema(required_properties = [])
 end
 
 RSpec.describe 'api/v1/buses', type: :request do
-
   path '/api/v1/buses' do
-
     get('List Buses') do
       tags 'Buses'
 
@@ -72,7 +70,7 @@ RSpec.describe 'api/v1/buses', type: :request do
         run_test!
       end
     end
-    
+
     put('Update Bus by ID') do
       tags 'Buses'
       consumes 'application/json'

@@ -24,7 +24,7 @@ class Api::V1::BusesController < ApplicationController
     end
     render json: obj, status:
   end
-  
+
   def update
     @bus = bus_find
     obj = {}
@@ -48,11 +48,12 @@ class Api::V1::BusesController < ApplicationController
     obj[:message] = 'Bus deleted successfully'
     render json: obj, status: :ok
   end
-  
+
   private
 
   def bus_params
-    params.require(:bus).permit(:name, :bus_number, :enquiry_number, :capacity, :agency_id, route_ids: [], service_ids: [])
+    params.require(:bus).permit(:name, :bus_number, :enquiry_number, :capacity, :agency_id, route_ids: [],
+                                                                                            service_ids: [])
   end
 
   def bus_find

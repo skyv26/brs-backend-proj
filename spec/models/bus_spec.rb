@@ -1,19 +1,13 @@
 require 'rails_helper'
 
+# Metrics/BlockLength
 RSpec.describe Bus, type: :model do
   let(:station1) do
-    Station.create(
-      name: 'Station1',
-      city: 'FTN',
-      state: 'TN01AB1234'
-    )
+    Station.create(name: 'Station1', city: 'FTN', state: 'TN01AB1234')
   end
+
   let(:station2) do
-    Station.create(
-      name: 'Station2',
-      city: 'FTN',
-      state: 'TN01AB1234'
-    )
+    Station.create(name: 'Station2', city: 'FTN', state: 'TN01AB1234')
   end
 
   let(:route) do
@@ -28,8 +22,8 @@ RSpec.describe Bus, type: :model do
 
   let(:agency) do
     User.create(full_name: 'mike benson', email_address: 'mike@benson', date_of_birth: '2000-01-01',
-                        mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
-                        security_question: "What is your first pet's name?", security_answer: 'cat')
+                mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
+                security_question: "What is your first pet's name?", security_answer: 'cat')
   end
 
   let(:service1) do
@@ -41,10 +35,8 @@ RSpec.describe Bus, type: :model do
   end
 
   let(:bus) do
-    described_class.new(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd', agency: )
+    described_class.new(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd', agency:)
   end
-
-
 
   context 'test cases for either bad or invalid
   arguments.' do
@@ -57,9 +49,6 @@ RSpec.describe Bus, type: :model do
           bus[:name] = value
           expect(bus).to_not be_valid
         end
-      end  
-
-      [nil, '', true, '12', false, 1234].each do |value|
         it 'enquiry_number should be a string' do
           bus.routes << route
           bus.services << service1
@@ -67,9 +56,6 @@ RSpec.describe Bus, type: :model do
           bus[:enquiry_number] = value
           expect(bus).to_not be_valid
         end
-      end
-
-      [nil, '', true, '12', false, 1234].each do |value|
         it 'enquiry_number should be a string' do
           bus.routes << route
           bus.services << service1

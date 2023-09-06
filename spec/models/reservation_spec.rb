@@ -28,14 +28,14 @@ RSpec.describe Reservation, type: :model do
 
   let(:agency) do
     User.create(full_name: 'mike benson', email_address: 'mike@benson', date_of_birth: '2000-01-01',
-                        mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
-                        security_question: "What is your first pet's name?", security_answer: 'cat')
+                mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
+                security_question: "What is your first pet's name?", security_answer: 'cat')
   end
 
   let(:passenger1) do
     User.create(full_name: 'mike benson', email_address: 'mike@benson', date_of_birth: '2000-01-01',
-                        mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
-                        security_question: "What is your first pet's name?", security_answer: 'cat')
+                mobile_no: '1234567890', password: 'password', profile_photo: 'profile.png', role: 'user',
+                security_question: "What is your first pet's name?", security_answer: 'cat')
   end
 
   let(:service1) do
@@ -47,11 +47,12 @@ RSpec.describe Reservation, type: :model do
   end
 
   let(:bus) do
-    Bus.create(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd', agency: )
+    Bus.create(name: 'Bus 1', bus_number: '1001', capacity: 50, enquiry_number: '12fd', agency:)
   end
 
   let(:reservation) do
-    described_class.new(berth_number: 25, refund_status: 'abc'*12, amount_paid: 12.69, user: passenger1, bus: , status: false)
+    described_class.new(berth_number: 25, refund_status: 'abc' * 12, amount_paid: 12.69, user: passenger1, bus:,
+                        status: false)
   end
 
   context 'table test cases checking for either bad argument or invalid information.' do

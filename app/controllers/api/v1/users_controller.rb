@@ -63,7 +63,7 @@ class Api::V1::UsersController < ApplicationController
     }
     render json: obj, status: :not_found
   end
-  
+
   def user_params
     params.require(:user).permit('full_name', 'email_address', 'date_of_birth', 'mobile_no', 'password',
                                  'profile_photo', 'role', 'security_question', 'security_answer')
