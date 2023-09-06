@@ -2,7 +2,6 @@ class Reservation < ApplicationRecord
   validates :berth_number, presence: true
   validates :refund_status, presence: true
   validates :amount_paid, presence: true
-  validates :status, presence: true
 
   validate :validate_berth_number
   validate :validate_refund_status
@@ -19,7 +18,7 @@ class Reservation < ApplicationRecord
   end
 
   def validate_amount_paid
-    errors.add(:amount_paid, 'must be an integer') unless amount_paid_before_type_cast.is_a?(Integer)
+    errors.add(:amount_paid, 'must be an integer') unless amount_paid_before_type_cast.is_a?(Integer) || amount_paid_before_type_cast.is_a?(Float)
   end
 
   def validate_refund_status
@@ -35,6 +34,10 @@ class Reservation < ApplicationRecord
   end
 
   def validate_status
-    errors.add(:refund_status, 'must be either true or false') unless status_before_type_cast.is_a?(TrueClass) || status_before_type_cast.is_a?(FalseClass)
+    unless status_before_type_cast.kind_of?(TrueClass) ||
+           status_before_type_cast.kind_of?(FalseClass)
+      errors.add(:status, 'must be a boolean either true or false')
+    end
   end
+  
 end
