@@ -1,33 +1,54 @@
 require 'swagger_helper'
+require 'response_helper'
 
+def reservation_parameter_schema(required_properties = [], include_status = false)
+  {
+    name: :reservation,
+    in: :body,
+    schema: {
+      type: :object,
+      properties: {
+        reservation: {
+          type: :object,
+          properties: {
+            user_id: { type: :string, format: :uuid },
+            bus_id: { type: :string, format: :uuid },
+            berth_number: { type: :integer },
+            refund_status: { type: :string },
+            amount_paid: { type: :decimal }
+          },
+          required: required_properties
+        }
+      }
+    }
+    if include_status
+      schema[:schema][:properties][:reservation][:properties][:status] = { type: :boolean }
+    end
+  }
+end
 RSpec.describe 'api/v1/reservations', type: :request do
 
   path '/api/v1/reservations' do
+    get('List Reservations') do
+      tags 'Reservations'
 
-    get('list reservations') do
       response(200, 'successful') do
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
 
-    post('create reservation') do
+    post('Create New Reservation') do
+      tags 'Reservations'
+      consumes 'application/json'
+      parameter reservation_parameter_schema(%w[berth_number amount_paid user_id bus_id])
       response(200, 'successful') do
+        after { |example| add_response(example) }
+        run_test!
+      end
 
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+      response(400, 'bad request') do
+        after { |example| add_response(example) }
         run_test!
       end
     end
@@ -36,63 +57,33 @@ RSpec.describe 'api/v1/reservations', type: :request do
   path '/api/v1/reservations/{id}' do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
-
-    get('show reservation') do
+    get('Show Reservation') do
+      tags 'Reservations'
       response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
 
-    patch('update reservation') do
+    put('Update Reservation by ID') do
+      tags 'Reservations'
+      consumes 'application/json'
+      parameter reservation_parameter_schema(, true)
       response(200, 'successful') do
-        let(:id) { '123' }
+        after { |example| add_response(example) }
+        run_test!
+      end
 
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+      response(400, 'bad request') do
+        after { |example| add_response(example) }
         run_test!
       end
     end
 
-    put('update reservation') do
+    delete('Delete Reservation') do
+      tags 'Reservations'
       response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    delete('delete reservation') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
+        after { |example| add_response(example) }
         run_test!
       end
     end
