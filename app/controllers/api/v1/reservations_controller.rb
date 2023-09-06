@@ -2,52 +2,72 @@ require 'rack/utils'
 
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show update destroy]
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def index
     @reservations = Reservation.all
-    render json: ReservationSerializer.new(@reservations).serialized_json
+    render json: ReservationSerializer.new(@reservations).serialized_json, status: :ok
   end
 
   def show
-    render json: ReservationSerializer.new(@reservation).serialized_json
+    render json: ReservationSerializer.new(set_reservation).serialized_json, status: :ok
   end
 
   def update
-    if @reservation.update(reservation_params)
-      render json: ReservationSerializer.new(@reservation).serialized_json
+    @reservation = set_reservation
+    obj = {}
+    status = :ok
+    if @reservation.update(route_params)
+      obj = JSON.parse(ReservationSerializer.new(@reservation).serialized_json)
+      obj[:message] = 'Reservation updated successfully'
+      @reservation.save
     else
-      render json: { errors: @reservation.errors }, status: :unprocessable_entity
+      obj[:invalid_requests] = @reservation.errors.full_messages
+      status = :unprocessable_entity
     end
+    render json: obj, status:
   end
-
+  
   def destroy
+    @reservation = set_reservation
     return unless @reservation.destroy
 
-    render json: { message: 'Reservation successfully deleted!' }, status: :ok
+    obj = JSON.parse(ReservationSerializer.new(@route).serialized_json)
+    obj[:message] = 'Reservation deleted successfully'
+    render json: obj, status: :ok
   end
 
   def create
-    @reservation = Reservation.new(reservation_params)
-
-    if @reservation.save
-      render json: { message: 'Reservation successfully created!' }, status: :created
+    @reservation = Reservation.new(route_params)
+    status = :created
+    obj = {}
+    if @route.save
+      obj = JSON.parse(ReservationSerializer.new(@reservation).serialized_json)
+      obj[:message] = 'New reservation is added successfully !'
     else
-      render json: { errors: @reservation.errors }, status: :unprocessable_entity
+      obj[:invalid_requests] = @reservation.errors.full_messages
+      status = :bad_request
+      obj[:message] = 'Oops! Something is not correct.'
     end
+    render json: obj, status:
   end
 
   private
 
   def set_reservation
-    @reservation = Reservation.find(params[:id])
+    Reservation.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    obj = {
+      data: {
+        id: params[:id],
+        type: 'reservation',
+        attributes: {}
+      },
+      status: :not_found
+    }
+    render json: obj
   end
 
   def reservation_params
-    params.require(:reservation).permit(:berth_number, :refund_status, :amount_paid, :status)
-  end
-
-  def render_not_found
-    render json: { error: 'Reservation not found' }, status: :not_found
+    params.require(:reservation).permit(:berth_number, :refund_status, :amount_paid, :status, :bus_id, :user_id)
   end
 end
