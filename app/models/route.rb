@@ -6,7 +6,7 @@ class Route < ApplicationRecord
   validates :departure_time, presence: true
   validate :departure_time_validity
 
-  has_many :bus_routes
+  has_many :bus_routes, dependent: :destroy
   has_many :buses, through: :bus_routes
 
   private

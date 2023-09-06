@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :buses
       resources :services
       resources :stations
+      resources :users
+      resources :reservations
     end
   end
 end

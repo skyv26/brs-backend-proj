@@ -5,24 +5,18 @@ RSpec.describe Station, type: :model do
   context 'test cases for either
           bad or invalid arguments.' do
     describe Station do
-      it 'name should a non-empy atleast 3 and less than 20 character string' do
-        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+      [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+        it 'name should a non-empy atleast 3 and less than 20 character string' do
           subject.name = value
-          expect(route).to_not be_valid
+          expect(subject).to_not be_valid
         end
-      end
-
-      it 'city should a non-empy atleast 3 and less than 20 character string' do
-        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+        it 'city should a non-empy atleast 3 and less than 20 character string' do
           subject.city = value
-          expect(route).to_not be_valid
+          expect(subject).to_not be_valid
         end
-      end
-
-      it 'state should a non-empy atleast 3 and less than 20 character string' do
-        [nil, 1234, '', 'test' * 6, 'AB', true, false].each do |value|
+        it 'state should a non-empy atleast 3 and less than 20 character string' do
           subject.state = value
-          expect(route).to_not be_valid
+          expect(subject).to_not be_valid
         end
       end
     end

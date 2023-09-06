@@ -12,15 +12,9 @@ class Station < ApplicationRecord
   private
 
   def validate_name_type
-    if name_before_type_cast.is_a?(Integer) ||
-       name_before_type_cast.is_a?(TrueClass) ||
-       name_before_type_cast.is_a?(FalseClass) ||
-       name_before_type_cast.is_a?(NilClass)
-      errors.add(:name, 'must be a string')
-    end
-  end
+    errors.add(:name, 'must be a string') unless name_before_type_cast.is_a?(String)
+    return unless name_before_type_cast.is_a?(String)
 
-  def validate_name_length
     if name.size > 20
       errors.add(:name, 'should not be greater than 20 characters')
     elsif name.size <= 2
@@ -29,15 +23,9 @@ class Station < ApplicationRecord
   end
 
   def validate_city_type
-    if city_before_type_cast.is_a?(Integer) ||
-       city_before_type_cast.is_a?(TrueClass) ||
-       city_before_type_cast.is_a?(FalseClass) ||
-       city_before_type_cast.is_a?(NilClass)
-      errors.add(:city, 'must be a string')
-    end
-  end
+    errors.add(:city, 'must be a string') unless city_before_type_cast.is_a?(String)
+    return unless city_before_type_cast.is_a?(String)
 
-  def validate_city_length
     if city.size > 20
       errors.add(:city, 'should not be greater than 20 characters')
     elsif city.size <= 2
@@ -46,15 +34,9 @@ class Station < ApplicationRecord
   end
 
   def validate_state_type
-    if state_before_type_cast.is_a?(Integer) ||
-       state_before_type_cast.is_a?(TrueClass) ||
-       state_before_type_cast.is_a?(FalseClass) ||
-       state_before_type_cast.is_a?(NilClass)
-      errors.add(:state, 'must be a string')
-    end
-  end
+    errors.add(:state, 'must be a string') unless state_before_type_cast.is_a?(String)
+    return unless state_before_type_cast.is_a?(String)
 
-  def validate_state_length
     if state.size > 20
       errors.add(:state, 'should not be greater than 20 characters')
     elsif state.size <= 2

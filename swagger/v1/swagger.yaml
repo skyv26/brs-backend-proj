@@ -4,6 +4,217 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/buses":
+    get:
+      summary: List Buses
+      tags:
+      - Buses
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Create New Bus
+      tags:
+      - Buses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bus:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    enquiry_number:
+                      type: string
+                    bus_number:
+                      type: string
+                    agency_id:
+                      type: string
+                      format: uuid
+                    route_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    service_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                  required:
+                  - name
+                  - bus_number
+                  - capacity
+  "/api/v1/buses/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Bus
+      tags:
+      - Buses
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: Update Bus by ID
+      tags:
+      - Buses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bus:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    enquiry_number:
+                      type: string
+                    bus_number:
+                      type: string
+                    agency_id:
+                      type: string
+                      format: uuid
+                    route_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    service_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                  required: []
+    delete:
+      summary: Delete Bus
+      tags:
+      - Buses
+      responses:
+        '200':
+          description: successful
+  "/api/v1/reservations":
+    get:
+      summary: List Reservations
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Create New Reservation
+      tags:
+      - Reservations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    user_id:
+                      type: string
+                      format: uuid
+                    bus_id:
+                      type: string
+                      format: uuid
+                    berth_number:
+                      type: integer
+                    amount_paid:
+                      type: number
+                      format: decimal
+                  required:
+                  - berth_number
+                  - amount_paid
+                  - user_id
+                  - bus_id
+  "/api/v1/reservations/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Reservation
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: Update Reservation by ID
+      tags:
+      - Reservations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    user_id:
+                      type: string
+                      format: uuid
+                    bus_id:
+                      type: string
+                      format: uuid
+                    berth_number:
+                      type: integer
+                    amount_paid:
+                      type: number
+                      format: decimal
+                    status:
+                      type: boolean
+                    refund_status:
+                      type: string
+                  required: []
+    delete:
+      summary: Delete Reservation
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: successful
   "/api/v1/routes":
     get:
       summary: List Routes
@@ -259,6 +470,110 @@ paths:
       summary: delete station
       tags:
       - Station
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    get:
+      summary: list users
+      tags:
+      - User
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create user
+      tags:
+      - User
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    full_name:
+                      type: string
+                    email_address:
+                      type: string
+                      format: email
+                    date_of_birth:
+                      type: string
+                      format: date
+                    mobile_no:
+                      type: string
+                    password:
+                      type: string
+                    profile_photo:
+                      type: string
+                    security_question:
+                      type: string
+                    security_answer:
+                      type: string
+                  required:
+                  - full_name
+                  - email_address
+  "/api/v1/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show user
+      tags:
+      - User
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update user
+      tags:
+      - User
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    full_name:
+                      type: string
+                    email_address:
+                      type: string
+                      format: email
+                    date_of_birth:
+                      type: string
+                      format: date
+                    mobile_no:
+                      type: string
+                    password:
+                      type: string
+                    profile_photo:
+                      type: string
+                    security_question:
+                      type: string
+                    security_answer:
+                      type: string
+                  required: []
+    delete:
+      summary: delete user
+      tags:
+      - User
       responses:
         '200':
           description: successful
