@@ -4,6 +4,215 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/buses":
+    get:
+      summary: List Buses
+      tags:
+      - Buses
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Create New Bus
+      tags:
+      - Buses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bus:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    enquiry_number:
+                      type: string
+                    bus_number:
+                      type: string
+                    agency_id:
+                      type: string
+                      format: uuid
+                    route_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    service_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                  required:
+                  - name
+                  - bus_number
+                  - capacity
+  "/api/v1/buses/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Bus
+      tags:
+      - Buses
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: Update Bus by ID
+      tags:
+      - Buses
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bus:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    enquiry_number:
+                      type: string
+                    bus_number:
+                      type: string
+                    agency_id:
+                      type: string
+                      format: uuid
+                    route_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                    service_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                  required: []
+    delete:
+      summary: Delete Bus
+      tags:
+      - Buses
+      responses:
+        '200':
+          description: successful
+  "/api/v1/reservations":
+    get:
+      summary: List Reservations
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Create New Reservation
+      tags:
+      - Reservations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    user_id:
+                      type: string
+                      format: uuid
+                    bus_id:
+                      type: string
+                      format: uuid
+                    berth_number:
+                      type: integer
+                    amount_paid:
+                      type: integer
+                  required:
+                  - berth_number
+                  - amount_paid
+                  - user_id
+                  - bus_id
+  "/api/v1/reservations/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Reservation
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: Update Reservation by ID
+      tags:
+      - Reservations
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    user_id:
+                      type: string
+                      format: uuid
+                    bus_id:
+                      type: string
+                      format: uuid
+                    berth_number:
+                      type: integer
+                    amount_paid:
+                      type: integer
+                    status:
+                      type: boolean
+                    refund_status:
+                      type: string
+                  required: []
+    delete:
+      summary: Delete Reservation
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: successful
   "/api/v1/routes":
     get:
       summary: List Routes
@@ -299,7 +508,6 @@ paths:
                       type: string
                     password:
                       type: string
-                      format: password
                     profile_photo:
                       type: string
                     security_question:
@@ -353,7 +561,6 @@ paths:
                       type: string
                     password:
                       type: string
-                      format: password
                     profile_photo:
                       type: string
                     security_question:
